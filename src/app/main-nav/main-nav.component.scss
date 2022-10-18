@@ -1,0 +1,73 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Titan+One&display=swap');
+.example-spacer {
+    flex: 1 1 auto;
+  }
+  .mat-toolbar{
+    background-color: green;
+    color: gold;
+  }
+  .mat-sidenav{
+    background-color: green;
+    color: gold;
+  }
+  .example-icon {
+    background-color: green;
+    border: 0;
+    color: white;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+  }
+  .shop-name {
+    font-family:  'Titan One', cursive;
+    // font-weight: 700;
+    font-size: x-large;
+    background: -webkit-linear-gradient(gold, goldenrod ) ;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+
+.sidenav-container {
+  height: 100%;
+}
+
+
+.sidenav {
+  width: 200px;
+}
+
+.sidenav .mat-toolbar {
+  background: inherit;
+}
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  width: 100%;
+}
+
+.nav-fs{
+  margin: 0 auto;
+  color: gold;
+}
+
+.sidenav-item{
+  font-family:  'Titan One', cursive;
+  color: gold;
+}
+
+.nav-item {
+  font-family:  'Titan One', cursive;
+    background: -webkit-linear-gradient(gold, goldenrod ) ;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 0 2em;
+}
+.center-align{
+  text-align: center;
+  flex: 1 1 auto;
+}
