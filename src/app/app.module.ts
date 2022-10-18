@@ -24,6 +24,9 @@ import { MainNavComponent } from './main-nav/main-nav.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { CarouselComponent } from './carousel/carousel.component';
 import { SwiperModule } from 'swiper/angular';
+import { FooterComponent } from './footer/footer.component';
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
 
 
 
@@ -33,6 +36,7 @@ import { SwiperModule } from 'swiper/angular';
     MainNavComponent,
     CarouselComponent,
     HomepageComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
