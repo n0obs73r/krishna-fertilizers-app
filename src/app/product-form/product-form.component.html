@@ -1,0 +1,34 @@
+
+<mat-card>
+    <form (submit)="onSubmit(postForm)" #postForm="ngForm">
+        <div>
+            <label for="p_name">Name: </label>
+            <input required name="p_name" type="text" ngModel>
+            <label for="p_brand">Brand Name: </label>
+            <input required name="p_brand" type="text" ngModel>
+        </div>
+        <div>
+            <label for="type">Product Type: </label>
+            <input required name="type" type="text" ngModel>
+            <label for="price">Price: </label>
+            <input required name="price" type="number" ngModel>
+            <label for="description">Description: </label>
+            <input required name="description" type="text" ngModel>
+        </div>
+        <div>
+            <label for="sale">Sale: </label>
+            <input name="sale" type="checkbox" ngModel>
+            <br>
+            <label for="sale_price">Sale Price: </label>
+            <input required name="sale_price" type="number" ngModel>
+        </div>
+        <div>
+            <label for="season">Season: </label>
+            <input required name="season" type="text" ngModel>
+            <!-- <label for="img_url">Image Upload: </label> -->
+            <!-- <input name="img_url" type="file"  #imageInput accept="image/*" [formControl]="img_url"> -->
+        </div>
+
+        <button type="Submit">Save Product</button>
+    </form>
+</mat-card>

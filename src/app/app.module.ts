@@ -11,6 +11,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatCardModule} from '@angular/material/card';
+import { FormsModule } from '@angular/forms';
 import {IvyCarouselModule} from 'angular-responsive-carousel';
 
 
@@ -27,6 +28,7 @@ import { SwiperModule } from 'swiper/angular';
 import { FooterComponent } from './footer/footer.component';
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
+import { ProductFormComponent } from './product-form/product-form.component';
 
 
 
@@ -37,6 +39,7 @@ import { getAnalytics } from "firebase/analytics";
     CarouselComponent,
     HomepageComponent,
     FooterComponent,
+    ProductFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -54,9 +57,10 @@ import { getAnalytics } from "firebase/analytics";
     SwiperModule,
     FlexLayoutModule,
     IvyCarouselModule,
+    FormsModule,
     RouterModule.forRoot([
       { path: '', component: HomepageComponent },
-      { path: 'carousel', component: CarouselComponent}
+      { path: 'product-form', component: ProductFormComponent}
     ]),
   ],
   providers: [],
