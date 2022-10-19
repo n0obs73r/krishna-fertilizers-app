@@ -6,8 +6,8 @@ export interface Product {
         price: number ,
         description: string ,
         img_url: string ,
-        sale: boolean ,
-        sale_price: number ,
+        sale: string ,
+        s_price: number ,
         season: string
   }
   

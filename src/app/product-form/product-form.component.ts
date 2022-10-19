@@ -35,7 +35,15 @@ export class ProductFormComponent implements OnInit {
       form.value.s_price,
       form.value.season
     )
+    console.log(form.value.sale);
   }
   
+  textBoxDisabled = true;
 
+  toggleOff(){
+    this.textBoxDisabled = false;
+  }
+  toggleOn(){
+    this.textBoxDisabled = true;
+  }
 }

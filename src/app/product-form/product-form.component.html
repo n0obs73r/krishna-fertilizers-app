@@ -17,14 +17,24 @@
         </div>
         <div>
             <label for="sale">Sale: </label>
-            <input name="sale" type="checkbox" ngModel>
+            <!-- <input name="sale" type="" ngModel> -->
+            <input name="sale" ngModel type="radio" [value]="true" (click)="toggleOff()" required/> Yes
+            <input name="sale" ngModel type="radio" [value]="false" (click)="toggleOn()" required  /> No           
             <br>
-            <label for="sale_price">Sale Price: </label>
-            <input required name="sale_price" type="number" ngModel>
+            <label for="s_price">Sale Price: </label>
+            <input required [disabled]="textBoxDisabled" name="s_price" type="number" ngModel>
         </div>
         <div>
             <label for="season">Season: </label>
-            <input required name="season" type="text" ngModel>
+            <!-- <input required name="season" type="text" ngModel> -->
+            <select required name="season" ngModel >
+                <option value="winter">Winter</option>
+                <option value="spring">Spring</option>
+                <option value="summer">Summer</option>
+                <option value="monsoon">Monsoon</option>
+                <option value="Autumn">Autumn</option>
+                <option value="All Seasons">All Seasons</option>
+              </select>
             <!-- <label for="img_url">Image Upload: </label> -->
             <!-- <input name="img_url" type="file"  #imageInput accept="image/*" [formControl]="img_url"> -->
         </div>

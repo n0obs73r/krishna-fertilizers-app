@@ -23,7 +23,7 @@ export class ProductSubmissionService {
     price: number ,
     description: string ,
     img_url: string ,
-    sale: boolean ,
+    sale: string ,
     s_price: number,
     season: string
     ){
@@ -34,10 +34,10 @@ export class ProductSubmissionService {
         type: type,
         price: price,
         description: description,
+        img_url: img_url,
         sale: sale,
-        sale_price: s_price,
-        season: season,
-        img_url: img_url
+        s_price: s_price,
+        season: season
         };
         this.http.post<{message:string}>('http://localhost:3000/product-form', product)
         .subscribe((responseData) =>{
