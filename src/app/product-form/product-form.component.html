@@ -12,7 +12,12 @@
         </div>
         <div class="input-fields">
             <label for="type">Product Type: </label>
-            <input required formControlName="type" type="text">
+            <!-- <input required formControlName="type" type="text"> -->
+            <select required formControlName="type" >
+                <option value="winter">Seed</option>
+                <option value="spring">Machinery</option>
+                <option value="summer">Fertilizers</option>
+              </select>
             </div>
           
             <div class="input-fields">

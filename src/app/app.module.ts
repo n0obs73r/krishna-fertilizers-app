@@ -29,6 +29,7 @@ import { FooterComponent } from './footer/footer.component';
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { ProductFormComponent } from './product-form/product-form.component';
+import { SeedsViewComponent } from './seeds-view/seeds-view.component';
 
 
 
@@ -40,6 +41,7 @@ import { ProductFormComponent } from './product-form/product-form.component';
     HomepageComponent,
     FooterComponent,
     ProductFormComponent,
+    SeedsViewComponent,
   ],
   imports: [
     BrowserModule,
@@ -60,7 +62,8 @@ import { ProductFormComponent } from './product-form/product-form.component';
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: HomepageComponent },
-      { path: 'product-form', component: ProductFormComponent}
+      { path: 'product-form', component: ProductFormComponent},
+      { path: 'seeds-view', component: SeedsViewComponent}
     ]),
   ],
   providers: [],

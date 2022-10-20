@@ -1,21 +1,49 @@
 import { Injectable } from '@angular/core';
 import { Product } from './products';
 import { HttpClient } from '@angular/common/http';
+import { Subject } from "rxjs";
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductSubmissionService {
+  private products: Product[] = [];
+  private productsUpdated = new Subject<Product[]>();
 
   constructor(private http: HttpClient) { }
 
-  
-  private products: Product[] = [];
-
   getProduct(){
-    return [...this.products];
+    this.http
+      .get<{ message: string; products: any }>(
+        "http://localhost:3000/view-seeds"
+      )
+      .pipe(map((productData) => {
+        return productData.products.map((product:any) => {
+          return {
+            id: product._id,
+            p_name: product.p_name ,
+            p_brand: product.p_brand ,
+            type: product.type,
+            price: product.price ,
+            description: product.description ,
+            img_url: product.img_url ,
+            sale: product.sale ,
+            s_price: product.s_price,
+            season: product.season,
+            image: File
+          };
+        });
+      }))
+      .subscribe(transformedPosts => {
+        this.products = transformedPosts;
+        this.productsUpdated.next([...this.products]);
+      });
+      console.log(this.products)
   }
-
+  getProductUpdateListener() {
+    return this.productsUpdated.asObservable();
+  }
   public addProduct( 
     p_name: string ,
     p_brand: string ,
@@ -72,6 +100,7 @@ export class ProductSubmissionService {
           console.log(responseData.message);
           this.products.push(product);
         });
+
     //     const product: Product = {
     //         id: 1,
     //         p_name: p_name,

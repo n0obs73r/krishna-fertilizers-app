@@ -6,6 +6,7 @@ const multer = require("multer");
 const Product = require('../model/product')
 //VfuApYwUqUpTrnbx
 const app = express();
+const router = express.Router();
 
 const MIME_TYPE_MAP = {
     'image/png' : 'png',
@@ -52,11 +53,12 @@ app.post('/product-form', multer({storage: storage}).single("image"),(req,res,ne
         type : req.body.type ,
         price : req.body.price ,
         description : req.body.description ,
-        img_url : url + "/uploads/"+ req.file.filename,
+        img_url : url + "/uploads/"+ req.file?.filename,
         sale : req.body.sale,
         s_price : req.body.s_price,
         season : req.body.season 
     });
+    // console.log(req.body.p_brand);
     console.log(product);
     product.save();
     res.status(201).json({
@@ -64,37 +66,16 @@ app.post('/product-form', multer({storage: storage}).single("image"),(req,res,ne
     });
 });
 
-app.get('/product-form',(req,res,next) =>{
-    // const posts = [
-    //     {
-    //     id: 1,
-    //     type: "seed",
-    //     p_brand: "syngenta",
-    //     p_name: "radish",
-    //     price: 501,
-    //     description: "description",
-    //     season: "winter",
-    //     img_url: "https://dummyurl",
-    //     sale: true,
-    //     sale_price: 451
-    //     },
-    //     {
-    //     id: 3,
-    //     type: "seed",
-    //     p_brand: "syngenta",
-    //     p_name: "tomato",
-    //     price: 502,
-    //     description: "description",
-    //     season: "winter",
-    //     img_url: "https://dummyurl",
-    //     sale: true,
-    //     sale_price: 452
-    // }
-    // ];
-    // res.status(200 ).json({
-    //     message: 'Posts fetched successfully!',
-    //     posts: posts
-    // });
+app.get('/seeds-view',(req,res,next) =>{
+    
+    Product.find().then(documents => {
+        res.status(200).json({
+            message: "Products Fetched Successfully!",
+            products: documents
+        });
+    });
+
+    
 });
 
 module.exports = app;
