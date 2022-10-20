@@ -1,11 +1,29 @@
 const express = require('express');
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const multer = require("multer");
 
 const Product = require('../model/product')
 //VfuApYwUqUpTrnbx
 const app = express();
 
+const MIME_TYPE_MAP = {
+    'image/png' : 'png',
+    'image/jpeg' : 'jpg',
+    'image/jpeg' : 'jpg',
+};
+
+const storage = multer.diskStorage({
+    destination: (req, file, callBack) => {
+        callBack(null, 'uploads')
+    },
+    filename: (req, file, callBack) => {
+        const name = file.originalname.toLowerCase().split(' ').join('-');
+        const ext = MIME_TYPE_MAP[file.mimetype];
+        console.log(ext);
+        callBack (null, name +  "-" + Date.now() + '.' + ext);
+    }
+  })
 mongoose.connect("mongodb+srv://aryand:VfuApYwUqUpTrnbx@cluster0.psmskrd.mongodb.net/test?retryWrites=true&w=majority")
 .then(() => {
     console.log('Connected to Database!');
@@ -24,7 +42,7 @@ app.use(function (req, res, next){
     next();
 });
 
-app.post('/product-form',(req,res,next) =>{
+app.post('/product-form', multer({storage: storage}).single("image"),(req,res,next) =>{
     const product = new Product({
         id: 32131231,
         p_name : req.body.p_name,

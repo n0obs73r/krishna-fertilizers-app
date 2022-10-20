@@ -3,11 +3,11 @@ export interface Product {
         p_name: string ,
         p_brand: string ,
         type: string,
-        price: number ,
+        price: string ,
         description: string ,
         img_url: string ,
         sale: string ,
-        s_price: number ,
+        s_price: string ,
         season: string
   }
   
