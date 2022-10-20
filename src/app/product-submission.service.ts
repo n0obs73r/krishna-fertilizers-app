@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Product } from './products';
 import { HttpClient } from '@angular/common/http';
-import { Subject } from "rxjs";
-import { map } from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +28,7 @@ export class ProductSubmissionService {
     season: string,
     image: File
     ){
+      console.log(img_url); //undefined
       const productData = new FormData();
       productData.append("id", "1");
       productData.append("p_name", p_name);
@@ -54,7 +53,9 @@ export class ProductSubmissionService {
       //   s_price: s_price,
       //   season: season
       //   };
-        this.http.post<{message:string}>('http://localhost:3000/product-form', productData)
+      this.http.post<{message:string}>('http://localhost:3000/product-form', productData)
+        // this.http.post<{message:string}>('https://krishna-fertilizers.web.app/product-form', productData)
+        // this.http.post<{message:string}>('https://krishna-fertilizers.web.app/product-form', productData)
         .subscribe((responseData) =>{
           const product: Product = {
             id: 1,
@@ -71,7 +72,19 @@ export class ProductSubmissionService {
           console.log(responseData.message);
           this.products.push(product);
         });
-        
+    //     const product: Product = {
+    //         id: 1,
+    //         p_name: p_name,
+    //         p_brand: p_brand,
+    //         type: type,
+    //         price: price,
+    //         description: description,
+    //         img_url: img_url,
+    //         sale: sale,
+    //         s_price: s_price,
+    //         season: season,
+    //         };
+    //       this.products.push(product);
     }
 
 }

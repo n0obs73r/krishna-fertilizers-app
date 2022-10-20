@@ -58,7 +58,7 @@ export class ProductFormComponent implements OnInit {
     }
     else{
       // console.log(this.img_name);
-        var filename = this.form.value.img_url.replace(/^.*[\\\/]/, '');
+        var filename: string = this.form.value.img_url.replace(/^.*[\\\/]/, '');
         console.log(filename);
         this.productService.addProduct(
         this.form.value.p_name,
@@ -74,7 +74,8 @@ export class ProductFormComponent implements OnInit {
       )
     // console.log(this.form.value);
     this.form.reset();
-    window.alert("Form Upploaded Successfully!");}
+    window.alert("Form Uploaded Successfully!");
+  }
   }
   
   textBoxDisabled = true;

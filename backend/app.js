@@ -37,12 +37,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(function (req, res, next){
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    // res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
     next();
 });
 
 app.post('/product-form', multer({storage: storage}).single("image"),(req,res,next) =>{
+    const url = req.protocol + '://' + req.get("host");
     const product = new Product({
         id: 32131231,
         p_name : req.body.p_name,
@@ -50,7 +52,7 @@ app.post('/product-form', multer({storage: storage}).single("image"),(req,res,ne
         type : req.body.type ,
         price : req.body.price ,
         description : req.body.description ,
-        img_url : req.body.img_url,
+        img_url : url + "/uploads/"+ req.file.filename,
         sale : req.body.sale,
         s_price : req.body.s_price,
         season : req.body.season 
