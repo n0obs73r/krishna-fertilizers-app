@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { seeds } from '../Products/seeds'
+// import { seeds } from '../Products/seeds'
 import { Subscription } from 'rxjs';
 import { ProductSubmissionService } from '../product-submission.service';
 import { Product } from '../products';
@@ -22,7 +22,7 @@ export class SeedsViewComponent implements OnInit {
       });
   }
 
-  seeds = [...seeds];
+  seeds = [...this.products];
   gridColumns = 3;
 
   toggleGridColumns() {

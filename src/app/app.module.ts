@@ -12,6 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatCardModule} from '@angular/material/card';
 import { FormsModule } from '@angular/forms';
+import { MatExpansionModule } from '@angular/material/expansion';
 import {IvyCarouselModule} from 'angular-responsive-carousel';
 
 
@@ -59,6 +60,7 @@ import { SeedsViewComponent } from './seeds-view/seeds-view.component';
     SwiperModule,
     FlexLayoutModule,
     IvyCarouselModule,
+    MatExpansionModule,
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: HomepageComponent },

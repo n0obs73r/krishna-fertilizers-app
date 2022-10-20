@@ -16,7 +16,7 @@ export class ProductSubmissionService {
   getProduct(){
     this.http
       .get<{ message: string; products: any }>(
-        "http://localhost:3000/view-seeds"
+        "http://localhost:3000/seeds-view"
       )
       .pipe(map((productData) => {
         return productData.products.map((product:any) => {
