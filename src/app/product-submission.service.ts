@@ -16,6 +16,7 @@ export class ProductSubmissionService {
   getProduct(){
     this.http
       .get<{ message: string; products: any }>(
+        // "http://192.168.1.7:3000/seeds-view"
         "http://localhost:3000/seeds-view"
       )
       .pipe(map((productData) => {
@@ -81,6 +82,7 @@ export class ProductSubmissionService {
       //   s_price: s_price,
       //   season: season
       //   };
+      // this.http.post<{message:string}>('http://192.168.7.1:3000/product-form', productData)
       this.http.post<{message:string}>('http://localhost:3000/product-form', productData)
         // this.http.post<{message:string}>('https://krishna-fertilizers.web.app/product-form', productData)
         // this.http.post<{message:string}>('https://krishna-fertilizers.web.app/product-form', productData)

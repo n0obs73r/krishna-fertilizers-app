@@ -3,8 +3,10 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const multer = require("multer");
 const path = require('path');
+const sharp = require('sharp');
 
-const Product = require('../model/product')
+const Product = require('../model/product');
+const { memoryStorage } = require('multer');
 //VfuApYwUqUpTrnbx
 const app = express();
 const router = express.Router();
@@ -13,19 +15,23 @@ const MIME_TYPE_MAP = {
     'image/png' : 'png',
     'image/jpeg' : 'jpg',
     'image/jpeg' : 'jpg',
+    'image/heif' : 'jpg',
+    'image/heic' : 'jpg'
 };
 
-const storage = multer.diskStorage({
-    destination: (req, file, callBack) => {
-        callBack(null, 'uploads')
-    },
-    filename: (req, file, callBack) => {
-        const name = file.originalname.toLowerCase().split(' ').join('-');
-        const ext = MIME_TYPE_MAP[file.mimetype];
-        console.log(ext);
-        callBack (null, name +  "-" + Date.now() + '.' + ext);
-    }
-  })
+const storage = memoryStorage();
+// const storage = multer.diskStorage({
+//     destination: (req, file, callBack) => {
+//         callBack(null, 'uploads')
+//     },
+//     filename: (req, file, callBack) => {
+//         const name = file.originalname.toLowerCase().split(' ').join('-');
+//         const ext = MIME_TYPE_MAP[file.mimetype];
+//         console.log(ext);
+//         callBack (null, name +  "-" + Date.now() + '.' + ext);
+//     }
+//   })
+  
 mongoose.connect("mongodb+srv://aryand:VfuApYwUqUpTrnbx@cluster0.psmskrd.mongodb.net/test?retryWrites=true&w=majority")
 .then(() => {
     console.log('Connected to Database!');
@@ -46,8 +52,9 @@ app.use(function (req, res, next){
     next();
 });
 
-app.post('/product-form', multer({storage: storage}).single("image"),(req,res,next) =>{
+app.post('/product-form', multer({storage: storage}).single("image"), async (req,res,next) =>{
     const url = req.protocol + '://' + req.get("host");
+    await sharp(req.file.buffer).resize({width: 400, height: 400, fit: sharp.fit.contain}).toFile('./uploads/'+ req.body.p_name + req.body.p_brand + Date.now() + req.file.originalname )
     const product = new Product({
         id: 32131231,
         p_name : req.body.p_name,
@@ -55,13 +62,14 @@ app.post('/product-form', multer({storage: storage}).single("image"),(req,res,ne
         type : req.body.type ,
         price : req.body.price ,
         description : req.body.description ,
-        img_url : url + "/uploads/"+ req.file?.filename,
+        img_url : url + "/uploads/"+ req.body.p_name + req.body.p_brand + Date.now() + req.file.originalname,
         sale : req.body.sale,
         s_price : req.body.s_price,
         season : req.body.season 
     });
     // console.log(req.body.p_brand);
     console.log(product);
+    console.log(req.file);
     product.save();
     res.status(201).json({
         message: "Post Added successfully"
