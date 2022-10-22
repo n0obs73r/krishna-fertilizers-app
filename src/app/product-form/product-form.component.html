@@ -5,7 +5,7 @@
             <label for="p_name">Name: </label>
             <input required formControlName="p_name" type="text">
             </div>
-         
+
             <div class="input-fields">
             <label for="p_brand">Brand Name: </label>
             <input required formControlName="p_brand" type="text">
@@ -14,17 +14,17 @@
             <label for="type">Product Type: </label>
             <!-- <input required formControlName="type" type="text"> -->
             <select required formControlName="type" >
-                <option value="winter">Seed</option>
-                <option value="spring">Machinery</option>
-                <option value="summer">Fertilizers</option>
+                <option value="seed">Seed</option>
+                <option value="machine">Machinery</option>
+                <option value="fertilizers">Fertilizers</option>
               </select>
             </div>
-          
+
             <div class="input-fields">
             <label for="price">Price: </label>
             <input required formControlName="price" type="number">
         </div>
-          
+
             <div class="input-fields">
             <label for="description">Description: </label>
             <input required formControlName="description" type="text">
@@ -33,9 +33,9 @@
             <label for="sale">Sale: </label>
             <!-- <input name="sale" type="" ngModel> -->
             <input formControlName="sale" type="radio" [value]="true" (click)="toggleOff()" required/> Yes
-            <input formControlName="sale" type="radio" [value]="false" (click)="toggleOn()" required  /> No           
+            <input formControlName="sale" type="radio" [value]="false" (click)="toggleOn()" required  /> No
         </div>
-            
+
             <div class="input-fields">
             <label for="s_price">Sale Price: </label>
             <input required formControlName="s_price" type="number">
@@ -52,11 +52,11 @@
                 <option value="All Seasons">All Seasons</option>
               </select>
             </div>
-           
+
               <div class="input-fields">
             <label for="img_url">Image Upload: </label>
             <input formControlName="img_url" required type="file" (change)="onImagePicked($event)" #imageInput accept="image/*">
-            
+
         </div>
         <div class="input-fields">
         <button  type="Submit">Save Product</button>
@@ -65,7 +65,7 @@
 </mat-card>
 
 
-<!-- 
+<!--
 <mat-card>
     <form (submit)="onSubmit(postForm)" #postForm="ngForm">
         <div>
@@ -85,7 +85,7 @@
         <div>
             <label for="sale">Sale: </label>
             <input name="sale" ngModel type="radio" [value]="true" (click)="toggleOff()" required/> Yes
-            <input name="sale" ngModel type="radio" [value]="false" (click)="toggleOn()" required  /> No           
+            <input name="sale" ngModel type="radio" [value]="false" (click)="toggleOn()" required  /> No
             <br>
             <label for="s_price">Sale Price: </label>
             <input required [disabled]="textBoxDisabled" name="s_price" type="number" ngModel>
@@ -102,7 +102,7 @@
               </select>
             <label for="img_url">Image Upload: </label>
             <input name="img_url" required type="file" (change)="onImagePicked($event)" #imageInput accept="image/*" ngForm>
-            
+
         </div>
 
         <button type="Submit">Save Product</button>
