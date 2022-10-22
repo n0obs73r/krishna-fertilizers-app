@@ -1,0 +1,13 @@
+<mat-card>
+  <form (submit)="onLogin(loginForm)" #loginForm="ngForm" *ngIf="!isLoading">
+    <div style="text-align: center">
+      <div style="margin: 30px">
+        <input matInput name="email" ngModel type="email" placeholder="E-Mail" #emailInput="ngModel" required email>
+      </div>
+      <div style="margin: 30px">
+        <input type="password" name="password" ngModel matInput placeholder="Password" #passwordInput="ngModel" required>
+      </div>
+      <button mat-raised-button color="accent" type="submit">Login</button>
+    </div>
+  </form>
+</mat-card>

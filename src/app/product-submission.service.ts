@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Product } from './products';
+import { AuthData } from './authData';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from "rxjs";
 import { map } from 'rxjs/operators';
+import {response} from "express";
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +18,8 @@ export class ProductSubmissionService {
   getSeeds(){
     this.http
       .get<{ message: string; products: any }>(
-        "http://localhost:3000/seeds-view"
+        // "http://localhost:3000/seeds-view"
+        "http://192.168.1.7:3000/seeds-view"
         // "http://krishnafertilizers-env-3.eba-3pw26wgu.ap-northeast-1.elasticbeanstalk.com/seeds-view"
       )
       .pipe(map((productData) => {
@@ -49,7 +52,8 @@ export class ProductSubmissionService {
   getFertilizers(){
     this.http
       .get<{ message: string; products: any }>(
-        "http://localhost:3000/fertilizers-view"
+        "http://192.168.1.7:3000/fertilizers-view"
+        // "http://localhost:3000/fertilizers-view"
         // "http://krishnafertilizers-env-3.eba-3pw26wgu.ap-northeast-1.elasticbeanstalk.com/seeds-view"
       )
       .pipe(map((productData) => {
@@ -81,7 +85,8 @@ export class ProductSubmissionService {
   getMachinery(){
     this.http
       .get<{ message: string; products: any }>(
-        "http://localhost:3000/machinery-view"
+        // "http://localhost:3000/machinery-view"
+        "http://192.168.1.7:3000/machinery-view"
         // "http://krishnafertilizers-env-3.eba-3pw26wgu.ap-northeast-1.elasticbeanstalk.com/seeds-view"
       )
       .pipe(map((productData) => {
@@ -111,6 +116,7 @@ export class ProductSubmissionService {
   getProductUpdateListener() {
     return this.productsUpdated.asObservable();
   }
+
   public addProduct(
     p_name: string ,
     p_brand: string ,
@@ -148,7 +154,8 @@ export class ProductSubmissionService {
       //   s_price: s_price,
       //   season: season
       //   };
-      this.http.post<{message:string}>('http://krishnafertilizers-env.eba-nzczqqmd.ap-northeast-1.elasticbeanstalk.com/product-form', productData)
+      // this.http.post<{message:string}>('http://localhost:3000/product-form', productData)
+      this.http.post<{message:string}>('http://192.168.1.7:3000/product-form', productData)
       // this.http.post<{message:string}>('http://krishnafertilizers-env-3.eba-3pw26wgu.ap-northeast-1.elasticbeanstalk.com/product-form', productData)
         // this.http.post<{message:string}>('https://krishna-fertilizers.web.app/product-form', productData)
         // this.http.post<{message:string}>('https://krishna-fertilizers.web.app/product-form', productData)
@@ -183,5 +190,23 @@ export class ProductSubmissionService {
     //         };
     //       this.products.push(product);
     }
+
+
+    createUser(email: string, password: string) {
+    const authData: AuthData = {email: email, password: password}
+      this.http.post("http://192.168.1.7:3000/signup", authData)
+        .subscribe(response => {
+          console.log(response);
+        })
+    }
+
+    loginUser(email: string, password: string) {
+      const authData: AuthData = {email: email, password: password}
+      this.http.post("http://192.168.1.7:3000/login", authData)
+        .subscribe(response => {
+          console.log(response);
+        })
+  }
+
 
 }

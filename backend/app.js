@@ -4,6 +4,9 @@ const mongoose = require("mongoose");
 const multer = require("multer");
 const path = require('path');
 const sharp = require('sharp');
+const User = require("./model/user");
+const bcrypt = require("bcryptjs");
+const jwt = require('jsonwebtoken')
 
 // const Product = require('./model/product');
 const Product = require('./model/product');
@@ -12,26 +15,7 @@ const { memoryStorage } = require('multer');
 const app = express();
 const router = express.Router();
 
-const MIME_TYPE_MAP = {
-    'image/png' : 'png',
-    'image/jpeg' : 'jpg',
-    'image/jpeg' : 'jpg',
-    'image/heif' : 'jpg',
-    'image/heic' : 'jpg'
-};
-
 const storage = memoryStorage();
-// const storage = multer.diskStorage({
-//     destination: (req, file, callBack) => {
-//         callBack(null, 'uploads')
-//     },
-//     filename: (req, file, callBack) => {
-//         const name = file.originalname.toLowerCase().split(' ').join('-');
-//         const ext = MIME_TYPE_MAP[file.mimetype];
-//         console.log(ext);
-//         callBack (null, name +  "-" + Date.now() + '.' + ext);
-//     }
-//   })
 
 mongoose.connect("mongodb+srv://aryand:VfuApYwUqUpTrnbx@cluster0.psmskrd.mongodb.net/?retryWrites=true&w=majority")
 .then(() => {
@@ -110,6 +94,62 @@ app.get('/machinery-view',(req,res,next) =>{
     });
   });
 
+
+});
+
+app.post('/signup',(req,res,next) =>{
+  bcrypt.hash(req.body.password, 10)
+    .then( hash => {
+      const user = new User({
+        email: req.body.email,
+        password: hash
+      });
+      user.save()
+        .then( result => {
+          res.status(201).json({
+            message: 'User Created',
+            result: result
+          });
+        })
+        .catch( err => {
+          res.status(500).json({
+            error: err
+          });
+        })
+    });
+});
+
+app.post('/login',(req,res,next) => {
+  let fetchedUser;
+  User.findOne({ email: req.body.email })
+    .then(user => {
+      // console.log(user);
+      if (!user) {
+        return res.status(401).json({
+          message: "Auth Failed"
+        });
+      }
+      fetchedUser = user;
+      return bcrypt.compare(req.body.password, user.password);
+    })
+    .then( result => {
+      // console.log(result);
+      if (!result){
+        return res.status(401).json({
+          message: "Auth Failed"
+        });
+      }
+      const token = jwt.sign({ email: fetchedUser.email, userId: fetchedUser._id},
+        'aryandadheech',
+        {expiresIn: "100h"} );
+      res.status(200).json({
+        token: token
+      });
+    })
+    .catch(err => { return res.status(401).json({
+      message: "Auth Failed"
+    })
+    })
 
 });
 

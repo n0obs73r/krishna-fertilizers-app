@@ -31,6 +31,8 @@ import { ProductFormComponent } from './product-form/product-form.component';
 import { SeedsViewComponent } from './seeds-view/seeds-view.component';
 import { FertilizersViewComponent } from './fertilizers-view/fertilizers-view.component';
 import { MachineryViewComponent } from './machinery-view/machinery-view.component';
+import { LoginComponent } from './login/login.component';
+import { SignupComponent } from './signup/signup.component';
 
 
 
@@ -45,6 +47,8 @@ import { MachineryViewComponent } from './machinery-view/machinery-view.componen
     SeedsViewComponent,
     FertilizersViewComponent,
     MachineryViewComponent,
+    LoginComponent,
+    SignupComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,9 +71,11 @@ import { MachineryViewComponent } from './machinery-view/machinery-view.componen
     RouterModule.forRoot([
       { path: '', component: HomepageComponent },
       { path: 'product-form', component: ProductFormComponent},
-      {path: 'seeds-view', component: SeedsViewComponent},
-      {path: 'fertilizers-view', component: FertilizersViewComponent},
-      {path: 'machinery-view', component: MachineryViewComponent}
+      { path: 'seeds-view', component: SeedsViewComponent},
+      { path: 'fertilizers-view', component: FertilizersViewComponent},
+      { path: 'machinery-view', component: MachineryViewComponent},
+      { path: 'login', component: LoginComponent},
+      { path: 'signup', component: SignupComponent}
     ]),
   ],
   providers: [],
