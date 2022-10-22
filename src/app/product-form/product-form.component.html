@@ -1,47 +1,47 @@
-
-<mat-card style="display: table;">
+<div style="display: flex; justify-content: center;text-align: center; margin: 30px auto">
+<mat-card style=" justify-content: center; text-align: center; max-width: fit-content">
     <form enctype="multipart/form-data" [formGroup]="form" (submit)="onSubmit()" >
         <div class="input-fields">
-            <label for="p_name">Name: </label>
+            <label >Name: </label>
             <input required formControlName="p_name" type="text">
             </div>
-         
+
             <div class="input-fields">
-            <label for="p_brand">Brand Name: </label>
+            <label >Brand Name: </label>
             <input required formControlName="p_brand" type="text">
         </div>
         <div class="input-fields">
-            <label for="type">Product Type: </label>
+            <label >Product Type: </label>
             <!-- <input required formControlName="type" type="text"> -->
             <select required formControlName="type" >
-                <option value="winter">Seed</option>
-                <option value="spring">Machinery</option>
-                <option value="summer">Fertilizers</option>
+                <option value="seed">Seed</option>
+                <option value="machine">Machinery</option>
+                <option value="fertilizers">Fertilizers</option>
               </select>
             </div>
-          
+
             <div class="input-fields">
-            <label for="price">Price: </label>
+            <label >Price: </label>
             <input required formControlName="price" type="number">
         </div>
-          
+
             <div class="input-fields">
-            <label for="description">Description: </label>
+            <label >Description: </label>
             <input required formControlName="description" type="text">
         </div>
         <div class="input-fields">
-            <label for="sale">Sale: </label>
+            <label >Sale: </label>
             <!-- <input name="sale" type="" ngModel> -->
             <input formControlName="sale" type="radio" [value]="true" (click)="toggleOff()" required/> Yes
-            <input formControlName="sale" type="radio" [value]="false" (click)="toggleOn()" required  /> No           
+            <input formControlName="sale" type="radio" [value]="false" (click)="toggleOn()" required  /> No
         </div>
-            
+
             <div class="input-fields">
-            <label for="s_price">Sale Price: </label>
+            <label >Sale Price: </label>
             <input required formControlName="s_price" type="number">
         </div>
         <div class="input-fields">
-            <label for="season">Season: </label>
+            <label>Season: </label>
             <!-- <input required name="season" type="text"> -->
             <select required formControlName="season" >
                 <option value="winter">Winter</option>
@@ -52,20 +52,21 @@
                 <option value="All Seasons">All Seasons</option>
               </select>
             </div>
-           
+
               <div class="input-fields">
-            <label for="img_url">Image Upload: </label>
+            <label >Image Upload: </label>
             <input formControlName="img_url" required type="file" (change)="onImagePicked($event)" #imageInput accept="image/*">
-            
+
         </div>
         <div class="input-fields">
         <button  type="Submit">Save Product</button>
     </div>
     </form>
 </mat-card>
+</div>
+<app-footer></app-footer>
 
-
-<!-- 
+<!--
 <mat-card>
     <form (submit)="onSubmit(postForm)" #postForm="ngForm">
         <div>
@@ -85,7 +86,7 @@
         <div>
             <label for="sale">Sale: </label>
             <input name="sale" ngModel type="radio" [value]="true" (click)="toggleOff()" required/> Yes
-            <input name="sale" ngModel type="radio" [value]="false" (click)="toggleOn()" required  /> No           
+            <input name="sale" ngModel type="radio" [value]="false" (click)="toggleOn()" required  /> No
             <br>
             <label for="s_price">Sale Price: </label>
             <input required [disabled]="textBoxDisabled" name="s_price" type="number" ngModel>
@@ -102,7 +103,7 @@
               </select>
             <label for="img_url">Image Upload: </label>
             <input name="img_url" required type="file" (change)="onImagePicked($event)" #imageInput accept="image/*" ngForm>
-            
+
         </div>
 
         <button type="Submit">Save Product</button>

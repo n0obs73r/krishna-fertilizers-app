@@ -1,16 +1,43 @@
 <div>
-    <swiper style="max-height: 400px; min-height: 200px;" class="top-margin"
-    [slidesPerView]="1"
-    [spaceBetween]="10"
-    [navigation]="false"
-    
-    [scrollbar]="{ draggable: true }"
-    >
-    <ng-template swiperSlide><img src="../../assets/banner/c1.jpg" style="min-height: 200px;" alt=""></ng-template>
-    <ng-template swiperSlide><img src="../../assets/banner/c2.jpg" style="min-height: 200px;" alt=""></ng-template>
-    <ng-template swiperSlide><img src="../../assets/banner/c3.jpg" style="min-height: 200px;" alt=""></ng-template>
-    <ng-template swiperSlide><img src="../../assets/banner/c4.jpg" style="min-height: 200px;" alt=""></ng-template>
-    <ng-template swiperSlide><img src="../../assets/banner/c5.jpg" style="min-height: 200px;" alt=""></ng-template>
-    <ng-template swiperSlide><img src="../../assets/banner/c6.jpg" style="min-height: 200px;" alt=""></ng-template>
-    </swiper>
+  <!--    <swiper style="max-height: 400px; min-height: 200px;" class="top-margin"-->
+  <!--    [slidesPerView]="1"-->
+  <!--    [spaceBetween]="10"-->
+  <!--    [navigation]="false"-->
+  <!--            [autoplay]="true"-->
+
+  <!--    [scrollbar]="{ draggable: true }"-->
+  <!--    >-->
+  <!--    <ng-template swiperSlide><img src="../../assets/banner/c1.jpg" style="min-height: 200px;" alt=""></ng-template>-->
+  <!--    <ng-template swiperSlide><img src="../../assets/banner/c2.jpg" style="min-height: 200px;" alt=""></ng-template>-->
+  <!--    <ng-template swiperSlide><img src="../../assets/banner/c3.jpg" style="min-height: 200px;" alt=""></ng-template>-->
+  <!--    <ng-template swiperSlide><img src="../../assets/banner/c4.jpg" style="min-height: 200px;" alt=""></ng-template>-->
+  <!--    <ng-template swiperSlide><img src="../../assets/banner/c5.jpg" style="min-height: 200px;" alt=""></ng-template>-->
+  <!--    <ng-template swiperSlide><img src="../../assets/banner/c6.jpg" style="min-height: 200px;" alt=""></ng-template>-->
+  <!--    </swiper>-->
+
+  <swiper [loop]="true" [autoHeight]="true" [allowTouchMove]="true"
+          [autoplay]="{ delay: 1000, disableOnInteraction: false }" [pagination]="{ clickable: false }" >
+    <ng-template data-swiper-autoplay="1500" swiperSlide>
+      <img src="../../assets/banner/c1.jpg" style="min-height: 200px;" alt="">
+    </ng-template>
+
+    <ng-template data-swiper-autoplay="1500" class="swiper-slide" swiperSlide>
+      <img src="../../assets/banner/c2.jpg" style="min-height: 200px;" alt="">
+    </ng-template>
+
+    <ng-template data-swiper-autoplay="1500" swiperSlide>
+      <img src="../../assets/banner/c3.jpg" style="min-height: 200px;" alt="">
+    </ng-template>
+    <ng-template data-swiper-autoplay="1500" swiperSlide>
+      <img src="../../assets/banner/c4.jpg" style="min-height: 200px;" alt="">
+    </ng-template>
+
+    <ng-template data-swiper-autoplay="1500" class="swiper-slide" swiperSlide>
+      <img src="../../assets/banner/c5.jpg" style="min-height: 200px;" alt="">
+    </ng-template>
+
+    <ng-template data-swiper-autoplay="1500" swiperSlide>
+      <img src="../../assets/banner/c6.jpg" style="min-height: 200px;" alt="">
+    </ng-template>
+  </swiper>
 </div>

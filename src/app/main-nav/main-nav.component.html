@@ -1,13 +1,16 @@
 <mat-sidenav-container class="sidenav-container" style="display: contents !important;">
   <mat-sidenav #drawer class="sidenav" fixedInViewport
-      [attr.role]="( isHandset$  | async) ? 'dialog' : 'navigation'"
-      [mode]="( isHandset$  | async) ? 'over' : 'side'"
-      [opened]="false">
+               [attr.role]="( isHandset$  | async) ? 'dialog' : 'navigation'"
+               [mode]="( isHandset$  | async) ? 'over' : 'side'"
+               [opened]="false">
     <mat-toolbar class="sidenav-item">Menu</mat-toolbar>
     <mat-nav-list>
-      <a class="sidenav-item" mat-list-item href="#">Seeds</a>
-      <a class="sidenav-item" mat-list-item href="#">Crop Protection</a>
-      <a class="sidenav-item" mat-list-item href="#">Machinery</a>
+      <a class="sidenav-item" mat-list-item routerLink="/seeds-view">Seeds</a>
+      <a class="sidenav-item" mat-list-item routerLink="/fertilizers-view">Crop Protection</a>
+      <a class="sidenav-item" mat-list-item routerLink="/machinery-view">Machinery</a>
+      <div style="position: absolute; bottom: 0;">
+        <a class="sidenav-item" mat-list-item routerLink="/admin-area">Admin Login</a>
+      </div>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content style="display: contents !important;">
@@ -20,12 +23,15 @@
         *ngIf=" isHandset$ | async">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span class="center-align"><h1 class="shop-name">Krishna Fertilizers</h1></span>
+      <span class="center-align"><a routerLink="/" class="shop-name">Krishna Fertilizers</a></span>
       <span class="center-align">
         <div class="nav-fs"  *ngIf="isWeb$ | async" >
-          <a class="nav-item" mat-list-item href="#">Seeds</a>
-          <a class="nav-item" mat-list-item href="#">Fertilizers</a>
-          <a class="nav-item" mat-list-item href="#">Machinery</a>
+          <a class="nav-item" routerLink="/seeds-view" mat-list-item h>Seeds</a>
+          <a class="nav-item" mat-list-item routerLink="/fertilizers-view">Fertilizers</a>
+          <a class="nav-item" mat-list-item routerLink="/machinery-view">Machinery</a>
+          <!--          <div style="position: absolute; right: 0;">-->
+          <a class="nav-item" mat-list-item routerLink="/admin-area">Admin Login</a>
+          <!--          </div>-->
         </div>
       </span>
     </mat-toolbar>

@@ -1,4 +1,4 @@
-const app = require("./backend/app");
+const app = require("./app");
 const debug = require("debug")("node-angular");
 const http = require("http");
 
@@ -146,7 +146,7 @@ server.listen(port);
 //         var dbo = db.db("products");
 //         dbo.collection("product").findOne({
 //             type: req.params.name
-//         }, 
+//         },
 //         function(err, result) {
 //             if (err) throw err;
 //             res.json(result);

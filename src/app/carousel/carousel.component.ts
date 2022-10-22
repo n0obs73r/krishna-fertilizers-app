@@ -1,8 +1,29 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { SwiperComponent } from "swiper/angular";
+import SwiperCore , {
+  Navigation,
+  Pagination,
+  Scrollbar,
+  A11y,
+  Virtual,
+  Zoom,
+  Autoplay,
+  Thumbs,
+  Controller,
+} from 'swiper';
+import Swiper from "swiper/types/swiper-class";
 
-import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
-
-SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
+SwiperCore.use([
+  Navigation,
+  Pagination,
+  Scrollbar,
+  A11y,
+  Virtual,
+  Zoom,
+  Autoplay,
+  Thumbs,
+  Controller
+]);
 
 @Component({
   selector: 'app-carousel',

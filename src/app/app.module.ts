@@ -13,7 +13,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatCardModule} from '@angular/material/card';
 import { FormsModule } from '@angular/forms';
 import { MatExpansionModule } from '@angular/material/expansion';
-import {IvyCarouselModule} from 'angular-responsive-carousel';
+// import {IvyCarouselModule} from 'angular-responsive-carousel';
 
 
 
@@ -27,10 +27,10 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { CarouselComponent } from './carousel/carousel.component';
 import { SwiperModule } from 'swiper/angular';
 import { FooterComponent } from './footer/footer.component';
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 import { ProductFormComponent } from './product-form/product-form.component';
 import { SeedsViewComponent } from './seeds-view/seeds-view.component';
+import { FertilizersViewComponent } from './fertilizers-view/fertilizers-view.component';
+import { MachineryViewComponent } from './machinery-view/machinery-view.component';
 
 
 
@@ -43,6 +43,8 @@ import { SeedsViewComponent } from './seeds-view/seeds-view.component';
     FooterComponent,
     ProductFormComponent,
     SeedsViewComponent,
+    FertilizersViewComponent,
+    MachineryViewComponent,
   ],
   imports: [
     BrowserModule,
@@ -59,13 +61,15 @@ import { SeedsViewComponent } from './seeds-view/seeds-view.component';
     ReactiveFormsModule,
     SwiperModule,
     FlexLayoutModule,
-    IvyCarouselModule,
+    // IvyCarouselModule,
     MatExpansionModule,
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: HomepageComponent },
       { path: 'product-form', component: ProductFormComponent},
-      { path: 'seeds-view', component: SeedsViewComponent}
+      {path: 'seeds-view', component: SeedsViewComponent},
+      {path: 'fertilizers-view', component: FertilizersViewComponent},
+      {path: 'machinery-view', component: MachineryViewComponent}
     ]),
   ],
   providers: [],

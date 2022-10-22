@@ -1,28 +1,28 @@
 import { Component, OnInit } from '@angular/core';
-// import { seeds } from '../Products/seeds'
 import { Subscription } from 'rxjs';
 import { ProductSubmissionService } from '../product-submission.service';
 import { Product } from '../products';
+
 @Component({
-  selector: 'app-seeds-view',
-  templateUrl: './seeds-view.component.html',
-  styleUrls: ['./seeds-view.component.scss']
+  selector: 'app-fertilizers-view',
+  templateUrl: './fertilizers-view.component.html',
+  styleUrls: ['./fertilizers-view.component.scss']
 })
-export class SeedsViewComponent implements OnInit {
+export class FertilizersViewComponent implements OnInit {
   products: Product[] = [];
   private productsSub?: Subscription;
 
-  constructor( public productsService: ProductSubmissionService) { }
+  constructor(public productsService: ProductSubmissionService) { }
 
   ngOnInit(): void {
-    this.productsService.getSeeds();
+    this.productsService.getFertilizers();
     this.productsSub = this.productsService.getProductUpdateListener()
       .subscribe((products: Product[]) => {
         this.products = products;
       });
   }
 
-  seeds = [...this.products];
+  fertilizers = [...this.products];
   gridColumns = 3;
 
   toggleGridColumns() {

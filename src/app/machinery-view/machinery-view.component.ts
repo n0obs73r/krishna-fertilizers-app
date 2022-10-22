@@ -1,21 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-// import { seeds } from '../Products/seeds'
 import { Subscription } from 'rxjs';
 import { ProductSubmissionService } from '../product-submission.service';
 import { Product } from '../products';
+
 @Component({
-  selector: 'app-seeds-view',
-  templateUrl: './seeds-view.component.html',
-  styleUrls: ['./seeds-view.component.scss']
+  selector: 'app-machinery-view',
+  templateUrl: './machinery-view.component.html',
+  styleUrls: ['./machinery-view.component.scss']
 })
-export class SeedsViewComponent implements OnInit {
+export class MachineryViewComponent implements OnInit {
   products: Product[] = [];
   private productsSub?: Subscription;
 
   constructor( public productsService: ProductSubmissionService) { }
 
   ngOnInit(): void {
-    this.productsService.getSeeds();
+    this.productsService.getMachinery();
     this.productsSub = this.productsService.getProductUpdateListener()
       .subscribe((products: Product[]) => {
         this.products = products;
@@ -25,8 +25,7 @@ export class SeedsViewComponent implements OnInit {
   seeds = [...this.products];
   gridColumns = 3;
 
-  toggleGridColumns() {
-    this.gridColumns = this.gridColumns === 3 ? 4 : 3;
-  }
-
+  // toggleGridColumns() {
+  //   this.gridColumns = this.gridColumns === 3 ? 4 : 3;
+  // }
 }

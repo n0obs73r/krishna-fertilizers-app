@@ -1,46 +1,45 @@
 .section{
-    margin: 5% ;
-    text-align: center;
+  margin: 5% ;
+  text-align: center;
 }
 .heading {
-    font-family:  'Titan One', cursive;
-    font-size: 30PX;
-    margin: 50px 50px 80px 50px;
-    color: goldenrod;
+  font-family:  'Titan One', cursive;
+  font-size: 30PX;
+  margin: 50px 50px 80px 50px;
+  color: goldenrod;
 }
 .content {
-    // padding: 16px;
-    margin: 0 auto;
+  // padding: 16px;
+  margin: 0 auto;
 }
 
 .content > mat-card {
-    width: 70%;
+  width: 70%;
 }
 .card {
-    border-radius: 10px;
-    background-color: gold;
+  border-radius: 10px;
+  background-color: gold;
 }
 @media only screen and (min-width: 768px) {
-    .card {
-        width: 200px !important;
-        max-height: 70vh;
-    }
-    .img-dim{
-        width: 200px !important;
-        max-height: 70vh;
-    }
+  .card {
+    width: 200px !important;
+    max-height: 70vh;
+  }
+  .img-dim{
+    width: 200px !important;
+    max-height: 70vh;
+  }
 }
 *.unselectable {
-    -moz-user-select: -moz-none;
-    -khtml-user-select: none;
-    -webkit-user-select: none;
- 
-    /*
-      Introduced in IE 10.
-      See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
-    */
-    -ms-user-select: none;
-    user-select: none;
- }
+  //-moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
 
- 
+  /*
+    Introduced in IE 10.
+    See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+  */
+  -ms-user-select: none;
+  user-select: none;
+}
+
