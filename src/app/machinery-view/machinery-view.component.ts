@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ProductSubmissionService } from '../product-submission.service';
 import { Product } from '../products';
+import {PageEvent} from "@angular/material/paginator";
 
 @Component({
   selector: 'app-machinery-view',
@@ -11,17 +12,31 @@ import { Product } from '../products';
 export class MachineryViewComponent implements OnInit {
   products: Product[] = [];
   private productsSub?: Subscription;
+  totalProducts = 0;
+  productsPerPage = 4;
+  pageSizeOptions = [2, 4, 8];
+  currentPage = 1;
+  isLoading = false;
 
   constructor( public productsService: ProductSubmissionService) { }
 
   ngOnInit(): void {
-    this.productsService.getMachinery();
+    this.isLoading = true;
+    this.productsService.getMachinery(this.productsPerPage,1);
     this.productsSub = this.productsService.getProductUpdateListener()
-      .subscribe((products: Product[]) => {
-        this.products = products;
+      .subscribe((productData: { products: Product[], productCount: number }) => {
+        this.isLoading = false;
+        this.products = productData.products;
+        this.totalProducts = productData.productCount;
       });
   }
 
+  onChangedPage(pageData: PageEvent) {
+    this.isLoading = true;
+    this.currentPage = pageData.pageIndex +1;
+    this.productsPerPage = pageData.pageSize;
+    this.productsService.getMachinery(this.productsPerPage,this.currentPage);
+  }
   seeds = [...this.products];
   gridColumns = 3;
 

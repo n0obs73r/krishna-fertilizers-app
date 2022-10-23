@@ -5,11 +5,15 @@
                [opened]="false">
     <mat-toolbar class="sidenav-item">Menu</mat-toolbar>
     <mat-nav-list>
-      <a class="sidenav-item" mat-list-item routerLink="/seeds-view">Seeds</a>
-      <a class="sidenav-item" mat-list-item routerLink="/fertilizers-view">Crop Protection</a>
-      <a class="sidenav-item" mat-list-item routerLink="/machinery-view">Machinery</a>
-      <div style="position: absolute; bottom: 0;">
-        <a class="sidenav-item" mat-list-item routerLink="/login">Admin Login</a>
+      <a (click)="drawer.close()" class="sidenav-item" mat-list-item routerLink="/seeds-view">Seeds</a>
+      <a (click)="drawer.close()" class="sidenav-item" mat-list-item routerLink="/fertilizers-view">Crop Protection</a>
+      <a (click)="drawer.close()" class="sidenav-item" mat-list-item routerLink="/machinery-view">Machinery</a>
+      <div style="position: absolute;display: flex; justify-content: center; align-items: center;margin: 0 auto; bottom: 20px; right: 20px; ">
+        <a (click)="drawer.close()"  *ngIf="!userIsAuthenticated" class="sidenav-item" mat-list-item routerLink="/login">Admin Login</a>
+        <a (click)="drawer.close()" *ngIf="userIsAuthenticated"  class="sidenav-item" mat-list-item  routerLink="/product-form">
+<!--          <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="work"></mat-icon>-->
+          Admin Dashboard
+        </a>
       </div>
     </mat-nav-list>
   </mat-sidenav>
@@ -24,13 +28,17 @@
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <span class="center-align"><a routerLink="/" class="shop-name">Krishna Fertilizers</a></span>
-      <span class="center-align">
+      <span class="center-align" style="text-align: center">
         <div class="nav-fs"  *ngIf="isWeb$ | async" >
           <a class="nav-item" routerLink="/seeds-view" mat-list-item h>Seeds</a>
           <a class="nav-item" mat-list-item routerLink="/fertilizers-view">Fertilizers</a>
           <a class="nav-item" mat-list-item routerLink="/machinery-view">Machinery</a>
           <!--          <div style="position: absolute; right: 0;">-->
-          <a class="nav-item" mat-list-item routerLink="/login">Admin Login</a>
+          <a class="nav-item" mat-list-item routerLink="/login"  *ngIf="!userIsAuthenticated">Admin Login</a>
+          <a  class="nav-item" mat-list-item routerLink="/product-form"  *ngIf="userIsAuthenticated">
+            Admin Dashboard
+<!--            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="work"></mat-icon>-->
+          </a>
           <!--          </div>-->
         </div>
       </span>

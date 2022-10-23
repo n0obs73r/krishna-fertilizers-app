@@ -8,7 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatCardModule} from '@angular/material/card';
 import { FormsModule } from '@angular/forms';
@@ -33,6 +33,11 @@ import { FertilizersViewComponent } from './fertilizers-view/fertilizers-view.co
 import { MachineryViewComponent } from './machinery-view/machinery-view.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
+import {AuthInterceptor} from "./auth-interceptor";
+import { MaterialElevationDirective } from "./material-elevation.directive";
+import { ProductManagementComponent } from './product-management/product-management.component'
+import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 
 
@@ -49,6 +54,8 @@ import { SignupComponent } from './signup/signup.component';
     MachineryViewComponent,
     LoginComponent,
     SignupComponent,
+    MaterialElevationDirective,
+    ProductManagementComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,18 +74,22 @@ import { SignupComponent } from './signup/signup.component';
     FlexLayoutModule,
     // IvyCarouselModule,
     MatExpansionModule,
+    MatPaginatorModule,
     FormsModule,
     RouterModule.forRoot([
-      { path: '', component: HomepageComponent },
-      { path: 'product-form', component: ProductFormComponent},
-      { path: 'seeds-view', component: SeedsViewComponent},
-      { path: 'fertilizers-view', component: FertilizersViewComponent},
-      { path: 'machinery-view', component: MachineryViewComponent},
-      { path: 'login', component: LoginComponent},
-      { path: 'signup', component: SignupComponent}
+      {path: '', component: HomepageComponent},
+      {path: 'product-form', component: ProductFormComponent},
+      {path: 'seeds-view', component: SeedsViewComponent},
+      {path: 'fertilizers-view', component: FertilizersViewComponent},
+      {path: 'machinery-view', component: MachineryViewComponent},
+      {path: 'login', component: LoginComponent},
+      {path: 'signup', component: SignupComponent}
     ]),
+    MatProgressSpinnerModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

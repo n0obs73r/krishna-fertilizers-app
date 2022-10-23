@@ -9,3 +9,19 @@ mat-toolbar {
 .content > mat-card {
     margin-bottom: 16px;
 }
+
+.bg-img{
+  height: 100%;
+
+  /* Create the parallax scrolling effect */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url("../../assets/grass-bg.jpeg");
+  background-size: cover;
+}
+.card-style{
+  border-radius: 15px;
+  //max-width: 100px !important;
+
+}

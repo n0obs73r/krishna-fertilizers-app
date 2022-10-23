@@ -6,7 +6,8 @@ const path = require('path');
 const sharp = require('sharp');
 const User = require("./model/user");
 const bcrypt = require("bcryptjs");
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const checkAuth = require("./middleware/check-auth")
 
 // const Product = require('./model/product');
 const Product = require('./model/product');
@@ -31,13 +32,13 @@ app.use("/uploads", express.static(path.join("uploads")));
 app.use(function (req, res, next){
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
     // res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
     next();
 });
 
-app.post('/product-form', multer({storage: storage}).single("image"), async (req,res,next) =>{
+app.post('/product-form', checkAuth, multer({storage: storage}).single("image"), async (req,res,next) =>{
     const url = req.protocol + '://' + req.get("host");
     const filename = req.body.p_name + req.body.p_brand + Date.now() + req.file.originalname;
     await sharp(req.file.buffer).resize({width: 400, height: 400, fit: sharp.fit.contain}).toFile('./uploads/'+ filename )
@@ -64,33 +65,75 @@ app.post('/product-form', multer({storage: storage}).single("image"), async (req
 
 
 app.get('/seeds-view',(req,res,next) =>{
-
-  Product.find({type:"seed"}).then(documents => {
-    res.status(200).json({
-      message: "Products Fetched Successfully!",
-      products: documents
+  const pageSizeSeed = +req.query.pagesize;
+  console.log(req.query);
+  const currentPageSeed = +req.query.page;
+  const productQuerySeed = Product.find({type:"seed"});
+  // const productQuerySeedCount = Product.count({type:"seed"});
+  // console.log(productQuerySeedCount);
+  let fetchedSeeds;
+  if(pageSizeSeed && currentPageSeed){
+    productQuerySeed
+      .skip(pageSizeSeed * (currentPageSeed - 1))
+      .limit(pageSizeSeed);
+  }
+  productQuerySeed.then(documents => {
+      fetchedSeeds = documents;
+      return Product.count({type:"seed"});
+    })
+    .then(countSeed => {
+      res.status(200).json({
+        message: "Products Fetched Successfully!",
+        products: fetchedSeeds,
+        maxProductsSeeds: countSeed
+      });
     });
-  });
-
-
+  // console.log(countSeed);
 });
-app.get('/fertilizers-view',(req,res,next) =>{
 
-  Product.find({type:"fertilizers"}).then(documents => {
+app.get('/fertilizers-view',(req,res,next) =>{
+  const pageSizeFertilizer = +req.query.pagesize;
+  const currentPageFertilizer = +req.query.page;
+  const productQueryFertilizer = Product.find({type:"fertilizers"});
+  let fetchedFertilizers;
+  if(pageSizeFertilizer && currentPageFertilizer){
+    productQueryFertilizer
+      .skip(pageSizeFertilizer * (currentPageFertilizer - 1))
+      .limit(pageSizeFertilizer);
+  }
+  productQueryFertilizer.then(documents => {
+    fetchedFertilizers = documents;
+    return Product.count({type:"fertilizers"});
+  })
+    .then(countFertilizer => {
     res.status(200).json({
       message: "Products Fetched Successfully!",
-      products: documents
+      products: fetchedFertilizers,
+      maxProductsFertilizers: countFertilizer
     });
   });
 
 
 });
 app.get('/machinery-view',(req,res,next) =>{
-
-  Product.find({type:"machine"}).then(documents => {
+  const pageSizeMachine = +req.query.pagesize;
+  const currentPageMachine = +req.query.page;
+  const productQueryMachine = Product.find({type:"machine"});
+  let fetchedMachine;
+  if(pageSizeMachine && currentPageMachine){
+    productQueryMachine
+      .skip(pageSizeMachine * (currentPageMachine - 1))
+      .limit(pageSizeMachine);
+  }
+  productQueryMachine.then(documents => {
+    fetchedMachine = documents;
+    return Product.count({type:"machine"});
+  })
+    .then(countMachine => {
     res.status(200).json({
       message: "Products Fetched Successfully!",
-      products: documents
+      products: fetchedMachine,
+      maxProductsMachine: countMachine
     });
   });
 

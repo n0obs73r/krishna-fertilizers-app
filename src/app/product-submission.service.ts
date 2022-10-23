@@ -1,29 +1,46 @@
-import { Injectable } from '@angular/core';
-import { Product } from './products';
-import { AuthData } from './authData';
-import { HttpClient } from '@angular/common/http';
-import { Subject } from "rxjs";
-import { map } from 'rxjs/operators';
-import {response} from "express";
+import {Injectable} from '@angular/core';
+import {Product} from './products';
+import {AuthData} from './authData';
+import {HttpClient} from '@angular/common/http';
+import {Subject} from "rxjs";
+import {map} from 'rxjs/operators';
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductSubmissionService {
+  private isAuthenticated = false;
+  private authStatusListener = new Subject<boolean>();
   private products: Product[] = [];
-  private productsUpdated = new Subject<Product[]>();
+  private productsUpdated = new Subject<{ products: Product[], productCount: number }>();
+  private token: string = "";
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
-  getSeeds(){
+
+  getToken() {
+    return this.token;
+  }
+
+  getIsAuth() {
+    return this.isAuthenticated;
+  }
+
+  getAuthStatusListener() {
+    return this.authStatusListener.asObservable();
+  }
+
+
+  getSeeds(productsPerPage: number, currentPage: number){
+    const queryParamsSeed =`?pagesize=${productsPerPage}&page=${currentPage}`;
+    console.log(queryParamsSeed)
     this.http
-      .get<{ message: string; products: any }>(
-        // "http://localhost:3000/seeds-view"
-        "http://192.168.1.7:3000/seeds-view"
-        // "http://krishnafertilizers-env-3.eba-3pw26wgu.ap-northeast-1.elasticbeanstalk.com/seeds-view"
+      .get<{ message: string; products: any; maxProductsSeeds: number}>(
+        "http://192.168.1.7:3000/seeds-view" + queryParamsSeed
       )
       .pipe(map((productData) => {
-        return productData.products.map((product:any) => {
+        return{ products: productData.products.map((product:any) => {
           return {
             id: product._id,
             p_name: product.p_name ,
@@ -37,11 +54,14 @@ export class ProductSubmissionService {
             season: product.season,
             image: File
           };
-        });
+        }),
+        maxProductsSeeds: productData.maxProductsSeeds
+        };
       }))
-      .subscribe(transformedPosts => {
-        this.products = transformedPosts;
-        this.productsUpdated.next([...this.products]);
+      .subscribe(transformedPostData => {
+        this.products = transformedPostData.products;
+        this.productsUpdated.next({ products:[...this.products] ,
+        productCount: transformedPostData.maxProductsSeeds});
       });
     console.log(this.products)
   }
@@ -49,15 +69,15 @@ export class ProductSubmissionService {
   ////////////////////////////////fertilizers-view//////////////////////////////////
 
 
-  getFertilizers(){
+  getFertilizers(productsPerPage: number, currentPage: number){
+    const queryParamsFertilizer =`?pagesize=${productsPerPage}&page=${currentPage}`;
+    console.log(queryParamsFertilizer);
     this.http
-      .get<{ message: string; products: any }>(
-        "http://192.168.1.7:3000/fertilizers-view"
-        // "http://localhost:3000/fertilizers-view"
-        // "http://krishnafertilizers-env-3.eba-3pw26wgu.ap-northeast-1.elasticbeanstalk.com/seeds-view"
+      .get<{ message: string; products: any; maxProductsFertilizers: number}>(
+        "http://192.168.1.7:3000/fertilizers-view" + queryParamsFertilizer
       )
       .pipe(map((productData) => {
-        return productData.products.map((product:any) => {
+        return{ products: productData.products.map((product:any) => {
           return {
             id: product._id,
             p_name: product.p_name ,
@@ -71,26 +91,29 @@ export class ProductSubmissionService {
             season: product.season,
             image: File
           };
-        });
+        }),
+          maxProductsFertilizers: productData.maxProductsFertilizers
+      };
       }))
-      .subscribe(transformedPosts => {
-        this.products = transformedPosts;
-        this.productsUpdated.next([...this.products]);
+      .subscribe(transformedPostData => {
+        this.products = transformedPostData.products;
+        this.productsUpdated.next({ products:[...this.products] ,
+          productCount: transformedPostData.maxProductsFertilizers});
       });
     console.log(this.products)
   }
 
   //////////////////////////////////machinery view/////////////////////////////////////////////
 
-  getMachinery(){
+  getMachinery(productsPerPage: number, currentPage: number){
+    const queryParamMachines =`?pagesize=${productsPerPage}&page=${currentPage}`;
+    console.log(queryParamMachines)
     this.http
-      .get<{ message: string; products: any }>(
-        // "http://localhost:3000/machinery-view"
-        "http://192.168.1.7:3000/machinery-view"
-        // "http://krishnafertilizers-env-3.eba-3pw26wgu.ap-northeast-1.elasticbeanstalk.com/seeds-view"
+      .get<{ message: string; products: any; maxProductsMachine: number}>(
+        "http://192.168.1.7:3000/machinery-view" + queryParamMachines
       )
       .pipe(map((productData) => {
-        return productData.products.map((product:any) => {
+        return{ products: productData.products.map((product:any) => {
           return {
             id: product._id,
             p_name: product.p_name ,
@@ -104,12 +127,14 @@ export class ProductSubmissionService {
             season: product.season,
             image: File
           };
-        });
+        }),
+        maxProductsMachine: productData.maxProductsMachine
+      };
       }))
-      .subscribe(transformedPosts => {
-        this.products = transformedPosts;
-        this.productsUpdated.next([...this.products]);
-      });
+      .subscribe(transformedPostData => {
+        this.products = transformedPostData.products;
+        this.productsUpdated.next({ products:[...this.products] ,
+          productCount: transformedPostData.maxProductsMachine});      });
     console.log(this.products)
   }
 
@@ -202,9 +227,16 @@ export class ProductSubmissionService {
 
     loginUser(email: string, password: string) {
       const authData: AuthData = {email: email, password: password}
-      this.http.post("http://192.168.1.7:3000/login", authData)
+      this.http.post<{token: string}>("http://192.168.1.7:3000/login", authData)
         .subscribe(response => {
           console.log(response);
+          const token = response.token;
+          this.token = response.token;
+          if(token) {
+            this.isAuthenticated = true;
+            this.router.navigate(['/']);
+          }
+          this.authStatusListener.next(true);
         })
   }
 

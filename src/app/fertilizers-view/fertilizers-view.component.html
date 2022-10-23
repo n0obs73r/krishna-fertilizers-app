@@ -1,5 +1,6 @@
+<div class="bg-img">
 <div style="padding: 50px !important" fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-around center" fxLayoutGap="25px">
-  <mat-card style="margin: 40px; text-align:center; padding-bottom: 50px;" *ngFor="let product of products" fxFlex="calc(33%-25px)" fxFlex.sm="calc(50%-25px)" >
+  <mat-card appMaterialElevation class="card-style" style="margin: 40px; text-align:center; padding-bottom: 50px;" *ngFor="let product of products" fxFlex="calc(33%-25px)" fxFlex.sm="calc(50%-25px)" >
     <mat-card-header style="text-align: center; display:block">
       <div  mat-card-avatar class="example-header-image"></div>
       <mat-card-title>{{product.p_name}}</mat-card-title>
@@ -17,4 +18,6 @@
     </mat-card-actions>
   </mat-card>
 </div>
+</div>
+<mat-paginator style="border-radius: 15px; opacity: 0.99" (page)="onChangedPage($event)" [length] ="totalProducts" [pageSize]="productsPerPage" [pageSizeOptions]="pageSizeOptions" *ngIf="products.length > 0 "> </mat-paginator>
 <app-footer></app-footer>

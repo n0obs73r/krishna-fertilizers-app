@@ -34,9 +34,9 @@ export class ProductFormComponent implements OnInit {
       'season': new FormControl(),
   });
   }
-  
+
   // private products: Product[] = [];
-  
+
   @Output() productCreated = new EventEmitter();
 
   onImagePicked(event: Event){
@@ -48,7 +48,7 @@ export class ProductFormComponent implements OnInit {
       });
       this.form.get('image')?.updateValueAndValidity();
       console.log(this.form.value.image);
-      
+
   }
 
   onSubmit(){
@@ -77,7 +77,7 @@ export class ProductFormComponent implements OnInit {
     window.alert("Form Uploaded Successfully!");
   }
   }
-  
+
   textBoxDisabled = true;
 
   toggleOff(){
@@ -88,5 +88,5 @@ export class ProductFormComponent implements OnInit {
     this.textBoxDisabled = true;
     this.form.controls['s_price'].disable();
   }
-  
+
 }

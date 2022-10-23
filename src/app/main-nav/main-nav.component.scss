@@ -24,7 +24,6 @@
     font-size: x-large;
     background: -webkit-linear-gradient(gold, goldenrod ) ;
     -webkit-background-clip: text;
-    background-clip: text;
     -webkit-text-fill-color: transparent;
   }
 
@@ -63,11 +62,15 @@
   font-family:  'Titan One', cursive;
     background: -webkit-linear-gradient(gold, goldenrod ) ;
     -webkit-background-clip: text;
-    background-clip: text;
     -webkit-text-fill-color: transparent;
     margin: 0 2em;
 }
 .center-align{
   text-align: center;
   flex: 1 1 auto;
+}
+.icon-display{
+  transform: scale(4);
+  font-size: 50px;
+
 }
