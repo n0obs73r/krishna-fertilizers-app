@@ -77,11 +77,13 @@ app.get("/edit/:id", checkAuth , (req, res, next) => {
 // app.put("/product-form/edit/:id", multer({ storage: storage }).single("image"), async (req, res, next) => {
 app.put("/edit/:id", checkAuth, multer({ storage: storage }).single("image"), async (req, res, next) => {
     const url = req.protocol + '://' + req.get("host");
-    console.log(req.file);
-    const filename = req.body.p_name + req.body.p_brand + Date.now() + req.file.originalname;
-    await sharp(req.file.buffer).resize({width: 400, height: 400, fit: sharp.fit.contain}).toFile('./uploads/'+ filename )
+    // console.log("file is requested:" + req.file);
+    // console.log("product iD2:" + req.body.id);
+    let filename = req.body.p_name + req.body.p_brand + Date.now() + req.body.img_url;
     if (req.file) {
       const url = req.protocol + "://" + req.get("host");
+      const filename = req.body.p_name + req.body.p_brand + Date.now() + req.file.originalname;
+      await sharp(req.file.buffer).resize({width: 400, height: 400, fit: sharp.fit.contain}).toFile('./uploads/'+ filename )
     }
     const product = new Product({
       id: 20,
@@ -96,16 +98,18 @@ app.put("/edit/:id", checkAuth, multer({ storage: storage }).single("image"), as
       s_price : req.body.s_price,
       season : req.body.season
     });
+    console.log("product iD2:" + req.body.id);
     Product.updateOne(
       { _id: req.params.id},
       product
     ).then(result => {
-      if (result.nModified > 0) {
-        res.status(200).json({ message: "Update successful!" });
-      } else {
-        console.log(product);
-        res.status(401).json({ message: "Not authorized!" });
-      }
+      res.status(200).json({ message: "Update Successful"});
+      // if (result.nModified > 0) {
+      //   res.status(200).json({ message: "Update successful!" });
+      // } else {
+      //   console.log(product);
+      //   res.status(401).json({ message: "Not authorized!" });
+      // }
     });
   }
 );

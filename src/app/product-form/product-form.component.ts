@@ -42,7 +42,7 @@ export class ProductFormComponent implements OnInit {
       if (paramMap.has("productId")) {
         this.mode = "edit";
         this.productId = paramMap.get("productId")!;
-        // console.log("it had productid"+ this.productId);
+        console.log("it had productid "+ this.productId);
         this.isLoading = true;
         this.productService.getProduct(this.productId).subscribe(productData => {
           this.isLoading = false;
@@ -69,7 +69,8 @@ export class ProductFormComponent implements OnInit {
             s_price: this.product.s_price ,
             season: this.product.season,
             // image: "http://192.168.1.7:3000/uploads/"+ this.img_name
-            image: "",
+            // image: "",
+            image: this.product.img_url,
             img_url: ""
           });
         });
@@ -141,7 +142,7 @@ export class ProductFormComponent implements OnInit {
     if(this.mode === "create"){
       // console.log(this.img_name);
       console.log("product create request generated!");
-        var filename: string = this.form.value.img_url.replace(/^.*[\\\/]/, '');
+        let filename: string = this.form.value.img_url.replace(/^.*[\\\/]/, '');
         console.log(filename);
         this.productService
           .addProduct(
@@ -156,14 +157,17 @@ export class ProductFormComponent implements OnInit {
         this.form.value.season,
         this.form.value.image
       )
+      console.log(this.form.value.filename);
+      console.log(filename);
     // console.log(this.form.value);
     this.form.reset();
     window.alert("Form Uploaded Successfully!");
   }
     else {
       console.log("product update request generated!");
-      var filename2: string = this.form.value.img_url.replace(/^.*[\\\/]/, '');
-      console.log(filename2);
+      let filename: string = this.form.value.img_url.replace(/^.*[\\\/]/, '');
+      console.log("Filename in update mode "+filename);
+      console.log("porduct id is:  "+this.productId)
       this.productService.updateProduct(
         this.productId,
         this.form.value.p_name,
@@ -171,12 +175,14 @@ export class ProductFormComponent implements OnInit {
         this.form.value.type,
         this.form.value.price,
         this.form.value.description,
-        this.form.value.filename2,
+        filename,
+        // this.form.value.filename,
         this.form.value.sale,
         this.form.value.s_price,
         this.form.value.season,
         this.form.value.image
       );
+      console.log(this.form.value.filename);
     }
 
     this.form.reset();

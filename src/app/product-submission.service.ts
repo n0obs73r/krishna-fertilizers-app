@@ -214,6 +214,7 @@ export class ProductSubmissionService {
     image: File | string
   ) {
     console.log(id);
+    console.log(img_url);
     let productData2: Product | FormData | any;
     if (typeof image === "object") {
       productData2 = new FormData();
@@ -228,6 +229,7 @@ export class ProductSubmissionService {
       productData2.append("s_price", s_price);
       productData2.append("season", season);
       productData2.append("image", image, img_url);
+      console.log("Image is an Object : " + image + " " + img_url);
     } else {
       productData2 = {
         id: id,
@@ -239,11 +241,14 @@ export class ProductSubmissionService {
         img_url: img_url,
         sale: sale,
         s_price: s_price,
-        season: season
+        season: season,
+        // image: image
       }
+      console.log("Image String : " + image + " " + img_url);
     }
     // this.http.put<{ token: string }>('http://192.168.1.7:3000/product-form/edit/' + id, productData, )
-    this.http.put<{ token: string }>('http://192.168.1.7:3000/edit/' + id,null, productData2)
+    // this.http.put<{ token: string }>('http://192.168.1.7:3000/edit/' + id , {} ,productData2)   //////////// id immutable error
+    this.http.put<{ token: string }>('http://192.168.1.7:3000/edit/' + id,productData2)       ///////////////////updates but auth failed
       .subscribe(response => {
         console.log(response);
         this.router.navigate(["/"]);
