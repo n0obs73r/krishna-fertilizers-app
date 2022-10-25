@@ -4,6 +4,7 @@ import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Product, products } from '../products';
 import { mimeType } from './mime-type.validator';
 import { ProductSubmissionService } from '../product-submission.service';
+import {ActivatedRoute, ParamMap} from "@angular/router";
 
 @Component({
   selector: 'app-product-form',
@@ -15,10 +16,13 @@ export class ProductFormComponent implements OnInit {
   filename: String = "";
   form!: FormGroup;
   shortLink: string = "";
-  loading: boolean = false; // Flag variable
-  // file: File = null;
+  loading: boolean = false;
+  product!: Product ;
+  isLoading = false;
+  private mode = "create";
+  private productId!: string;
 
-  constructor(public productService: ProductSubmissionService) {}
+  constructor(public productService: ProductSubmissionService, public route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -33,6 +37,83 @@ export class ProductFormComponent implements OnInit {
       's_price': new FormControl({value: '', disabled: true}, Validators.required),
       'season': new FormControl(),
   });
+
+    this.route.paramMap.subscribe((paramMap: ParamMap) => {
+      if (paramMap.has("productId")) {
+        this.mode = "edit";
+        this.productId = paramMap.get("productId")!;
+        // console.log("it had productid"+ this.productId);
+        this.isLoading = true;
+        this.productService.getProduct(this.productId).subscribe(productData => {
+          this.isLoading = false;
+          this.product = {
+            id : productData._id,
+            p_name: productData.p_name ,
+            p_brand: productData.p_brand ,
+            type: productData.type,
+            price: productData.price ,
+            description: productData.description ,
+            img_url: productData.img_url ,
+            sale: productData.sale ,
+            s_price: productData.s_price ,
+            season: productData.season
+          };
+          this.form.setValue({
+            p_name: this.product.p_name ,
+            p_brand: this.product.p_brand ,
+            type: this.product.type,
+            price: this.product.price ,
+            description: this.product.description ,
+            // img_url: this.product.img_url ,
+            sale: this.product.sale ,
+            s_price: this.product.s_price ,
+            season: this.product.season,
+            // image: "http://192.168.1.7:3000/uploads/"+ this.img_name
+            image: "",
+            img_url: ""
+          });
+        });
+      } else {
+        this.mode = "create";
+        this.productId = null!;
+      }
+    });
+      // this.route.paramMap.subscribe((paramMap: ParamMap) => {
+    //   if (paramMap.has("productId")) {
+    //     this.mode = "edit";
+    //     this.productId = paramMap.get("productId")!;
+    //     this.isLoading = true;
+    //     this.productService.getProduct(this.productId).subscribe(productData => {
+    //       this.isLoading = false;
+    //       this.product = {
+    //         id : productData._id,
+    //         p_name: productData.p_name ,
+    //         p_brand: productData.p_brand ,
+    //         type: productData.type,
+    //         price: productData.price ,
+    //         description: productData.description ,
+    //         img_url: productData.img_url ,
+    //         sale: productData.sale ,
+    //         s_price: productData.s_price ,
+    //         season: productData.season
+    //       };
+    //       this.form.setValue({
+    //         p_name: this.product.p_name ,
+    //         p_brand: this.product.p_brand ,
+    //         type: this.product.type,
+    //         price: this.product.price ,
+    //         description: this.product.description ,
+    //         img_url: this.product.img_url ,
+    //         sale: this.product.sale ,
+    //         s_price: this.product.s_price ,
+    //         season: this.product.season
+    //       });
+    //     });
+    //   } else {
+    //     this.mode = "create";
+    //     this.productId = null!;
+    //   }
+    // });
   }
 
   // private products: Product[] = [];
@@ -56,11 +137,14 @@ export class ProductFormComponent implements OnInit {
       window.alert("Invalid Details!");
       return;
     }
-    else{
+    this.isLoading = true;
+    if(this.mode === "create"){
       // console.log(this.img_name);
+      console.log("product create request generated!");
         var filename: string = this.form.value.img_url.replace(/^.*[\\\/]/, '');
         console.log(filename);
-        this.productService.addProduct(
+        this.productService
+          .addProduct(
         this.form.value.p_name,
         this.form.value.p_brand,
         this.form.value.type,
@@ -76,6 +160,26 @@ export class ProductFormComponent implements OnInit {
     this.form.reset();
     window.alert("Form Uploaded Successfully!");
   }
+    else {
+      console.log("product update request generated!");
+      var filename2: string = this.form.value.img_url.replace(/^.*[\\\/]/, '');
+      console.log(filename2);
+      this.productService.updateProduct(
+        this.productId,
+        this.form.value.p_name,
+        this.form.value.p_brand,
+        this.form.value.type,
+        this.form.value.price,
+        this.form.value.description,
+        this.form.value.filename2,
+        this.form.value.sale,
+        this.form.value.s_price,
+        this.form.value.season,
+        this.form.value.image
+      );
+    }
+
+    this.form.reset();
   }
 
   textBoxDisabled = true;

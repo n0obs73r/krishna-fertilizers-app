@@ -40,7 +40,7 @@ app.use(function (req, res, next){
 
 app.post('/product-form', checkAuth, multer({storage: storage}).single("image"), async (req,res,next) =>{
     const url = req.protocol + '://' + req.get("host");
-    const filename = req.body.p_name + req.body.p_brand + Date.now() + req.file.originalname;
+    const filename= req.body.p_name + req.body.p_brand + Date.now() + req.file.originalname;
     await sharp(req.file.buffer).resize({width: 400, height: 400, fit: sharp.fit.contain}).toFile('./uploads/'+ filename )
     const product = new Product({
         id: 32131231,
@@ -63,6 +63,76 @@ app.post('/product-form', checkAuth, multer({storage: storage}).single("image"),
     });
 });
 
+// app.get("/product-form/edit/:id", checkAuth , (req, res, next) => {
+app.get("/edit/:id", checkAuth , (req, res, next) => {
+  Product.findById(req.params.id).then(product => {
+    if (product) {
+      res.status(200).json(product);
+    } else {
+      res.status(404).json({ message: "Product not found!" });
+    }
+  });
+});
+
+// app.put("/product-form/edit/:id", multer({ storage: storage }).single("image"), async (req, res, next) => {
+app.put("/edit/:id", checkAuth, multer({ storage: storage }).single("image"), async (req, res, next) => {
+    const url = req.protocol + '://' + req.get("host");
+    console.log(req.file);
+    const filename = req.body.p_name + req.body.p_brand + Date.now() + req.file.originalname;
+    await sharp(req.file.buffer).resize({width: 400, height: 400, fit: sharp.fit.contain}).toFile('./uploads/'+ filename )
+    if (req.file) {
+      const url = req.protocol + "://" + req.get("host");
+    }
+    const product = new Product({
+      id: 20,
+      _id: req.body.id,
+      p_name : req.body.p_name,
+      p_brand : req.body.p_brand,
+      type : req.body.type ,
+      price : req.body.price ,
+      description : req.body.description ,
+      img_url : url + "/uploads/"+ filename,
+      sale : req.body.sale,
+      s_price : req.body.s_price,
+      season : req.body.season
+    });
+    Product.updateOne(
+      { _id: req.params.id},
+      product
+    ).then(result => {
+      if (result.nModified > 0) {
+        res.status(200).json({ message: "Update successful!" });
+      } else {
+        console.log(product);
+        res.status(401).json({ message: "Not authorized!" });
+      }
+    });
+  }
+);
+
+app.get('/product-management', checkAuth, (req,res,next) =>{
+  const pageSizeProduct = +req.query.pagesize;
+  console.log(req.query);
+  const currentPageProduct = +req.query.page;
+  const productQueryProduct = Product.find();
+  let fetchedProducts;
+  if(pageSizeProduct && currentPageProduct){
+    productQueryProduct
+      .skip(pageSizeProduct * (currentPageProduct - 1))
+      .limit(pageSizeProduct);
+  }
+  productQueryProduct.then(documents => {
+    fetchedProducts = documents;
+    return Product.count();
+  })
+    .then(countProduct => {
+      res.status(200).json({
+        message: "Products Fetched Successfully!",
+        products: fetchedProducts,
+        maxProducts: countProduct
+      });
+    });
+});
 
 app.get('/seeds-view',(req,res,next) =>{
   const pageSizeSeed = +req.query.pagesize;

@@ -38,6 +38,7 @@ import { MaterialElevationDirective } from "./material-elevation.directive";
 import { ProductManagementComponent } from './product-management/product-management.component'
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {AuthGuard} from "./auth.guard";
 
 
 
@@ -83,12 +84,16 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
       {path: 'fertilizers-view', component: FertilizersViewComponent},
       {path: 'machinery-view', component: MachineryViewComponent},
       {path: 'login', component: LoginComponent},
-      {path: 'signup', component: SignupComponent}
+      {path: 'signup', component: SignupComponent},
+      {path: 'product-management', component: ProductManagementComponent, canActivate: [AuthGuard]},
+      // {path: 'product-form/edit/:productId', component: ProductFormComponent, canActivate: [AuthGuard]}
+      {path: 'edit/:productId', component: ProductFormComponent, canActivate: [AuthGuard]}
     ]),
     MatProgressSpinnerModule,
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    {provide: AuthGuard}
   ],
   bootstrap: [AppComponent]
 })

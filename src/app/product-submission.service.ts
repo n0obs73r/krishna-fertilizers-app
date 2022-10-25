@@ -31,6 +31,64 @@ export class ProductSubmissionService {
     return this.authStatusListener.asObservable();
   }
 
+  getProducts(productsPerPage: number, currentPage: number){
+    const queryParamsProduct =`?pagesize=${productsPerPage}&page=${currentPage}`;
+    console.log(queryParamsProduct)
+    this.http
+      .get<{ message: string; products: any; maxProducts: number}>(
+        "http://192.168.1.7:3000/product-management" + queryParamsProduct
+      )
+      .pipe(map((productData) => {
+        return{ products: productData.products.map((product:any) => {
+            return {
+              id: product._id,
+              p_name: product.p_name ,
+              p_brand: product.p_brand ,
+              type: product.type,
+              price: product.price ,
+              description: product.description ,
+              img_url: product.img_url ,
+              sale: product.sale ,
+              s_price: product.s_price,
+              season: product.season,
+              image: File
+            };
+          }),
+          maxProducts: productData.maxProducts
+        };
+      }))
+      .subscribe(transformedPostData => {
+        this.products = transformedPostData.products;
+        this.productsUpdated.next({ products:[...this.products] ,
+          productCount: transformedPostData.maxProducts});
+      });
+    console.log(this.products)
+  }
+
+  deleteProduct(productId: string) {
+    return this.http
+      .delete("http://192.168.1.7:3000/edit/" + productId);
+      // .delete("http://192.168.1.7:3000/product-form/edit/" + productId);
+  }
+
+  getProduct(id: string) {
+    return this.http.get<{
+      _id : string,
+      p_name: string ,
+      p_brand: string ,
+      type: string,
+      price: string ,
+      description: string ,
+      img_url: string ,
+      sale: string ,
+      s_price: string ,
+      season: string,
+      image: File
+    }>("http://192.168.1.7:3000/edit/" + id);
+    // }>("http://192.168.1.7:3000/product-form/edit/" + id);
+  }
+
+
 
   getSeeds(productsPerPage: number, currentPage: number){
     const queryParamsSeed =`?pagesize=${productsPerPage}&page=${currentPage}`;
@@ -142,6 +200,68 @@ export class ProductSubmissionService {
     return this.productsUpdated.asObservable();
   }
 
+  public updateProduct(
+    id: string,
+    p_name: string ,
+    p_brand: string ,
+    type: string,
+    price: string ,
+    description: string ,
+    img_url: string ,
+    sale: string ,
+    s_price: string,
+    season: string,
+    image: File | string
+  ) {
+    console.log(id);
+    let productData2: Product | FormData | any;
+    if (typeof image === "object") {
+      productData2 = new FormData();
+      productData2.append("id", id);
+      productData2.append("p_name", p_name);
+      productData2.append("p_brand", p_brand);
+      productData2.append("type", type);
+      productData2.append("price", price);
+      productData2.append("description", description);
+      productData2.append("img_url", img_url);
+      productData2.append("sale", sale);
+      productData2.append("s_price", s_price);
+      productData2.append("season", season);
+      productData2.append("image", image, img_url);
+    } else {
+      productData2 = {
+        id: id,
+        p_name: p_name,
+        p_brand: p_brand,
+        type: type,
+        price: price,
+        description: description,
+        img_url: img_url,
+        sale: sale,
+        s_price: s_price,
+        season: season
+      }
+    }
+    // this.http.put<{ token: string }>('http://192.168.1.7:3000/product-form/edit/' + id, productData, )
+    this.http.put<{ token: string }>('http://192.168.1.7:3000/edit/' + id,null, productData2)
+      .subscribe(response => {
+        console.log(response);
+        this.router.navigate(["/"]);
+      });
+      // .subscribe((response) => {
+      //   // this.router.navigate(['/product-management']).then(r => console.log(r));
+      //   const token = response.token;
+      //   console.log(response.token);
+      //   this.token = response.token;
+      //   if(token) {
+      //     this.isAuthenticated = true;
+      //     this.router.navigate(['/']);
+      //   }
+      //   this.authStatusListener.next(true);
+      // });
+  }
+
+
   public addProduct(
     p_name: string ,
     p_brand: string ,
@@ -154,7 +274,7 @@ export class ProductSubmissionService {
     season: string,
     image: File
     ){
-      console.log(img_url); //undefined
+      // console.log(img_url); //undefined
       const productData = new FormData();
       productData.append("id", "1");
       productData.append("p_name", p_name);
@@ -186,7 +306,7 @@ export class ProductSubmissionService {
         // this.http.post<{message:string}>('https://krishna-fertilizers.web.app/product-form', productData)
         .subscribe((responseData) =>{
           const product: Product = {
-            id: 1,
+            id: "1",
             p_name: p_name,
             p_brand: p_brand,
             type: type,
@@ -200,6 +320,9 @@ export class ProductSubmissionService {
           console.log(responseData.message);
           this.products.push(product);
         });
+
+
+
 
     //     const product: Product = {
     //         id: 1,

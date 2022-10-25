@@ -1,5 +1,5 @@
 export interface Product {
-        id : number,
+        id : string,
         p_name: string ,
         p_brand: string ,
         type: string,
@@ -10,8 +10,8 @@ export interface Product {
         s_price: string ,
         season: string
   }
-  
-  
+
+
 export const products = [
     {
         "id": 1,
