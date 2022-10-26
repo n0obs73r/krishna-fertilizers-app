@@ -1,27 +1,49 @@
-# KrishnaFertilizersApp
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.6.
+# Offline Shop Stock Management and Portfolio
 
-## Development server
+A SPA (Single Page Application) built on MEAN (Mongo, Express, Angular, Node.js) stack
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-## Code scaffolding
+[![Angular](https://github.com/aleen42/badges/raw/master/src/angular.svg)]()
+[![Node.js](https://github.com/aleen42/badges/raw/master/src/node.svg)]()
+[![TypeScript](https://github.com/aleen42/badges/raw/master/src/typescript.svg)]()
+[![npm](https://github.com/aleen42/badges/raw/master/src/npm.svg)]()
+[![]()]()
+[![]()]()
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-## Build
+## Deployment
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+To deploy the backend api
 
-## Running unit tests
+```bash
+  cd backend
+  npm install
+  node server.js
+```
+To deploy the Angular Frontend
+```bash
+  npm install
+  ng serve
+```
+## Technologies Used
+- MongoDB : Document database – used by your back-end application to store its data as JSON (JavaScript Object Notation) documents
+- Express (sometimes referred to as Express.js): Back-end web application framework running on top of Node.js
+- Angular (formerly Angular.js): Front-end web app framework; runs your JavaScript code in the user's browser, allowing your application UI to be dynamic
+- Node.js : JavaScript runtime environment – lets you implement your application back-end in JavaScrip
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-## Running end-to-end tests
+## Pre-requisites
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+ - git
+ - node.js
+ - npm
+ - mongodb 
 
-## Further help
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Contributing
+
+Contributions are always welcome!
+
+
+
