@@ -8,7 +8,6 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 
 import { ProductSubmissionService } from "./product-submission.service";
-import {Product} from "./products";
 
 @Injectable()
 export class AuthGuard implements CanActivate {

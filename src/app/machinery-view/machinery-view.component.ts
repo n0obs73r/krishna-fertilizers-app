@@ -39,9 +39,4 @@ export class MachineryViewComponent implements OnInit {
     this.productsService.getMachinery(this.productsPerPage,this.currentPage);
   }
   seeds = [...this.products];
-  gridColumns = 3;
-
-  // toggleGridColumns() {
-  //   this.gridColumns = this.gridColumns === 3 ? 4 : 3;
-  // }
 }

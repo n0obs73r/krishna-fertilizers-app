@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {ProductSubmissionService} from "../product-submission.service";
-import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import {  NgForm } from '@angular/forms';
 
 
 @Component({

@@ -8,11 +8,14 @@
     "express": "^4.18.2",
     "firebase": "^9.12.1",
     "firebase-tools": "^11.15.0",
-    "mongoose": "^6.6.5",
+    "mongoose": "^6.7.0",
     "multer": "^1.4.5-lts.1",
-    "rxjs": "~7.5.0",
+    "rxjs": "~7.5.7",
     "sharp": "^0.31.1",
     "swiper": "^8.4.4",
-    "tslib": "^2.3.0"
+    "tslib": "^2.4.0",
+    "mongoose-unique-validator": "^3.1.0",
+    "jsonwebtoken": "^8.5.1"
+
   }
 }

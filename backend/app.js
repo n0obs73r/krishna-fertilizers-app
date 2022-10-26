@@ -9,12 +9,9 @@ const bcrypt = require("bcryptjs");
 const jwt = require('jsonwebtoken');
 const checkAuth = require("./middleware/check-auth")
 
-// const Product = require('./model/product');
 const Product = require('./model/product');
 const { memoryStorage } = require('multer');
-//VfuApYwUqUpTrnbx
 const app = express();
-const router = express.Router();
 
 const storage = memoryStorage();
 
@@ -33,12 +30,11 @@ app.use(function (req, res, next){
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-    // res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
     next();
 });
 
-app.post('/product-form', checkAuth, multer({storage: storage}).single("image"), async (req,res,next) =>{
+app.post('/product-form', checkAuth, multer({storage: storage}).single("image"), async (req,res) =>{
     const url = req.protocol + '://' + req.get("host");
     const filename= req.body.p_name + req.body.p_brand + Date.now() + req.file.originalname;
     await sharp(req.file.buffer).resize({width: 400, height: 400, fit: sharp.fit.contain}).toFile('./uploads/'+ filename )
@@ -54,7 +50,6 @@ app.post('/product-form', checkAuth, multer({storage: storage}).single("image"),
         s_price : req.body.s_price,
         season : req.body.season
     });
-    // console.log(req.body.p_brand);
     console.log(product);
     console.log(req.file);
     product.save();
@@ -63,7 +58,6 @@ app.post('/product-form', checkAuth, multer({storage: storage}).single("image"),
     });
 });
 
-// app.get("/product-form/edit/:id", checkAuth , (req, res, next) => {
 app.get("/edit/:id", checkAuth , (req, res, next) => {
   Product.findById(req.params.id).then(product => {
     if (product) {
@@ -74,11 +68,8 @@ app.get("/edit/:id", checkAuth , (req, res, next) => {
   });
 });
 
-// app.put("/product-form/edit/:id", multer({ storage: storage }).single("image"), async (req, res, next) => {
-app.put("/edit/:id", checkAuth, multer({ storage: storage }).single("image"), async (req, res, next) => {
+app.put("/edit/:id", checkAuth, multer({ storage: storage }).single("image"), async (req, res) => {
     const url = req.protocol + '://' + req.get("host");
-    // console.log("file is requested:" + req.file);
-    // console.log("product iD2:" + req.body.id);
     let filename = req.body.p_name + req.body.p_brand + Date.now() + req.body.img_url;
     if (req.file) {
       const url = req.protocol + "://" + req.get("host");
@@ -104,12 +95,6 @@ app.put("/edit/:id", checkAuth, multer({ storage: storage }).single("image"), as
       product
     ).then(result => {
       res.status(200).json({ message: "Update Successful"});
-      // if (result.nModified > 0) {
-      //   res.status(200).json({ message: "Update successful!" });
-      // } else {
-      //   console.log(product);
-      //   res.status(401).json({ message: "Not authorized!" });
-      // }
     });
   }
 );
@@ -147,13 +132,11 @@ app.get('/product-management', checkAuth, (req,res,next) =>{
     });
 });
 
-app.get('/seeds-view',(req,res,next) =>{
+app.get('/seeds-view',(req,res) =>{
   const pageSizeSeed = +req.query.pagesize;
   console.log(req.query);
   const currentPageSeed = +req.query.page;
   const productQuerySeed = Product.find({type:"seed"});
-  // const productQuerySeedCount = Product.count({type:"seed"});
-  // console.log(productQuerySeedCount);
   let fetchedSeeds;
   if(pageSizeSeed && currentPageSeed){
     productQuerySeed
@@ -171,11 +154,10 @@ app.get('/seeds-view',(req,res,next) =>{
         maxProductsSeeds: countSeed
       });
     });
-  // console.log(countSeed);
 });
 
 
-app.get('',(req,res,next) =>{
+app.get('',(req,res) =>{
 
   const productQueryProduct = Product.find({sale : "true"});
   let fetchedProductsSale;
@@ -191,26 +173,8 @@ app.get('',(req,res,next) =>{
     });
 });
 
-//   Product.find({sale: "true"}).then(documents =>{
-//     req.status(200).json({
-//       message: "Products fetched successfully!",
-//       products: documents
-//     })
-//   })
-//   // Product.find({sale: "true"}).then(product => {
-//   //   if (product) {
-//   //     res.status(200).json(product);
-//   //     console.log(product);
-//   //   } else {
-//   //     res.status(404).json({ message: "Products not found!" });
-//   //   }
-//   // });
-//   // console.log(products);
-// });
 
-
-
-app.get('/fertilizers-view',(req,res,next) =>{
+app.get('/fertilizers-view',(req,res) =>{
   const pageSizeFertilizer = +req.query.pagesize;
   const currentPageFertilizer = +req.query.page;
   const productQueryFertilizer = Product.find({type:"fertilizers"});
@@ -234,7 +198,7 @@ app.get('/fertilizers-view',(req,res,next) =>{
 
 
 });
-app.get('/machinery-view',(req,res,next) =>{
+app.get('/machinery-view',(req,res) =>{
   const pageSizeMachine = +req.query.pagesize;
   const currentPageMachine = +req.query.page;
   const productQueryMachine = Product.find({type:"machine"});
@@ -259,7 +223,7 @@ app.get('/machinery-view',(req,res,next) =>{
 
 });
 
-app.post('/signup',(req,res,next) =>{
+app.post('/signup',(req,res) =>{
   bcrypt.hash(req.body.password, 10)
     .then( hash => {
       const user = new User({
@@ -281,7 +245,7 @@ app.post('/signup',(req,res,next) =>{
     });
 });
 
-app.post('/login',(req,res,next) => {
+app.post('/login',(req,res) => {
   let fetchedUser;
   User.findOne({ email: req.body.email })
     .then(user => {

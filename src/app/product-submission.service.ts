@@ -5,8 +5,6 @@ import {HttpClient} from '@angular/common/http';
 import {Subject} from "rxjs";
 import {map} from 'rxjs/operators';
 import {Router} from "@angular/router";
-import axios from "axios";
-import {response} from "express";
 
 @Injectable({
   providedIn: 'root'
@@ -39,7 +37,7 @@ export class ProductSubmissionService {
     console.log(queryParamsProduct)
     this.http
       .get<{ message: string; products: any; maxProducts: number}>(
-        "http://192.168.1.7:3000/product-management" + queryParamsProduct
+        "http://krishna-fertilizers.ap-northeast-1.elasticbeanstalk.com/product-management" + queryParamsProduct
       )
       .pipe(map((productData) => {
         return{ products: productData.products.map((product:any) => {
@@ -70,8 +68,7 @@ export class ProductSubmissionService {
 
   deleteProduct(productId: string) {
     return this.http
-      .delete("http://192.168.1.7:3000/edit/" + productId);
-      // .delete("http://192.168.1.7:3000/product-form/edit/" + productId);
+      .delete("http://krishna-fertilizers.ap-northeast-1.elasticbeanstalk.com/edit/" + productId);
   }
 
   getProduct(id: string) {
@@ -87,15 +84,15 @@ export class ProductSubmissionService {
       s_price: string ,
       season: string,
       image: File
-    }>("http://192.168.1.7:3000/edit/" + id);
-    // }>("http://192.168.1.7:3000/product-form/edit/" + id);
+    }>("http://krishna-fertilizers.ap-northeast-1.elasticbeanstalk.com/edit/" + id);
+    // }>("http://krishna-fertilizers.ap-northeast-1.elasticbeanstalk.com/product-form/edit/" + id);
   }
 
 
   getSale(){
     this.http
       .get<{ message: string; products: any; }>(
-        "http://192.168.1.7:3000"
+        "http://krishna-fertilizers.ap-northeast-1.elasticbeanstalk.com"
       )
       .pipe(map((productData) => {
         return {
@@ -132,7 +129,7 @@ export class ProductSubmissionService {
     console.log(queryParamsSeed)
     this.http
       .get<{ message: string; products: any; maxProductsSeeds: number}>(
-        "http://192.168.1.7:3000/seeds-view" + queryParamsSeed
+        "http://krishna-fertilizers.ap-northeast-1.elasticbeanstalk.com/seeds-view" + queryParamsSeed
       )
       .pipe(map((productData) => {
         return{ products: productData.products.map((product:any) => {
@@ -169,7 +166,7 @@ export class ProductSubmissionService {
     console.log(queryParamsFertilizer);
     this.http
       .get<{ message: string; products: any; maxProductsFertilizers: number}>(
-        "http://192.168.1.7:3000/fertilizers-view" + queryParamsFertilizer
+        "http://krishna-fertilizers.ap-northeast-1.elasticbeanstalk.com/fertilizers-view" + queryParamsFertilizer
       )
       .pipe(map((productData) => {
         return{ products: productData.products.map((product:any) => {
@@ -206,7 +203,7 @@ export class ProductSubmissionService {
     console.log(queryParamMachines)
     this.http
       .get<{ message: string; products: any; maxProductsMachine: number}>(
-        "http://192.168.1.7:3000/machinery-view" + queryParamMachines
+        "http://krishna-fertilizers.ap-northeast-1.elasticbeanstalk.com/machinery-view" + queryParamMachines
       )
       .pipe(map((productData) => {
         return{ products: productData.products.map((product:any) => {
@@ -289,24 +286,11 @@ export class ProductSubmissionService {
       }
       console.log("Image String : " + image + " " + img_url);
     }
-    // this.http.put<{ token: string }>('http://192.168.1.7:3000/product-form/edit/' + id, productData, )
-    // this.http.put<{ token: string }>('http://192.168.1.7:3000/edit/' + id , {} ,productData2)   //////////// id immutable error
-    this.http.put<{ token: string }>('http://192.168.1.7:3000/edit/' + id,productData2)       ///////////////////updates but auth failed
+    this.http.put<{ token: string }>('http://krishna-fertilizers.ap-northeast-1.elasticbeanstalk.com/edit/' + id,productData2)       ///////////////////updates but auth failed
       .subscribe(response => {
         console.log(response);
         this.router.navigate(["/"]);
       });
-      // .subscribe((response) => {
-      //   // this.router.navigate(['/product-management']).then(r => console.log(r));
-      //   const token = response.token;
-      //   console.log(response.token);
-      //   this.token = response.token;
-      //   if(token) {
-      //     this.isAuthenticated = true;
-      //     this.router.navigate(['/']);
-      //   }
-      //   this.authStatusListener.next(true);
-      // });
   }
 
 
@@ -335,23 +319,7 @@ export class ProductSubmissionService {
       productData.append("s_price", s_price );
       productData.append("season", season);
       productData.append("image", image, img_url);
-      // const product: Product = {
-      //   id: 1,
-      //   p_name: p_name,
-      //   p_brand: p_brand,
-      //   type: type,
-      //   price: price,
-      //   description: description,
-      //   img_url: img_url,
-      //   sale: sale,
-      //   s_price: s_price,
-      //   season: season
-      //   };
-      // this.http.post<{message:string}>('http://localhost:3000/product-form', productData)
-      this.http.post<{message:string}>('http://192.168.1.7:3000/product-form', productData)
-      // this.http.post<{message:string}>('http://krishnafertilizers-env-3.eba-3pw26wgu.ap-northeast-1.elasticbeanstalk.com/product-form', productData)
-        // this.http.post<{message:string}>('https://krishna-fertilizers.web.app/product-form', productData)
-        // this.http.post<{message:string}>('https://krishna-fertilizers.web.app/product-form', productData)
+      this.http.post<{message:string}>('http://krishna-fertilizers.ap-northeast-1.elasticbeanstalk.com/product-form', productData)
         .subscribe((responseData) =>{
           const product: Product = {
             id: "1",
@@ -368,29 +336,12 @@ export class ProductSubmissionService {
           console.log(responseData.message);
           this.products.push(product);
         });
-
-
-
-
-    //     const product: Product = {
-    //         id: 1,
-    //         p_name: p_name,
-    //         p_brand: p_brand,
-    //         type: type,
-    //         price: price,
-    //         description: description,
-    //         img_url: img_url,
-    //         sale: sale,
-    //         s_price: s_price,
-    //         season: season,
-    //         };
-    //       this.products.push(product);
     }
 
 
     createUser(email: string, password: string) {
     const authData: AuthData = {email: email, password: password}
-      this.http.post("http://192.168.1.7:3000/signup", authData)
+      this.http.post("http://krishna-fertilizers.ap-northeast-1.elasticbeanstalk.com/signup", authData)
         .subscribe(response => {
           console.log(response);
         })
@@ -398,7 +349,7 @@ export class ProductSubmissionService {
 
     loginUser(email: string, password: string) {
       const authData: AuthData = {email: email, password: password}
-      this.http.post<{token: string}>("http://192.168.1.7:3000/login", authData)
+      this.http.post<{token: string}>("http://krishna-fertilizers.ap-northeast-1.elasticbeanstalk.com/login", authData)
         .subscribe(response => {
           console.log(response);
           const token = response.token;

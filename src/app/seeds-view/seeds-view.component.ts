@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-// import { seeds } from '../Products/seeds'
 import { Subscription } from 'rxjs';
 import { ProductSubmissionService } from '../product-submission.service';
 import {Product} from '../products';
@@ -32,7 +31,6 @@ export class SeedsViewComponent implements OnInit {
   }
 
   seeds = [...this.products];
-  gridColumns = 3;
 
   onChangedPage(pageData: PageEvent) {
     this.isLoading = true;
@@ -41,8 +39,5 @@ export class SeedsViewComponent implements OnInit {
     this.productsService.getSeeds(this.productsPerPage,this.currentPage);
   }
 
-  toggleGridColumns() {
-    this.gridColumns = this.gridColumns === 3 ? 4 : 3;
-  }
 
 }

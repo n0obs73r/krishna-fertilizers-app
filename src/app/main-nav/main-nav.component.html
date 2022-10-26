@@ -11,7 +11,6 @@
       <div style="position: absolute;display: flex; justify-content: center; align-items: center;margin: 0 auto; bottom: 20px; right: 20px; ">
         <a (click)="drawer.close()"  *ngIf="!userIsAuthenticated" class="sidenav-item" mat-list-item routerLink="/login">Admin Login</a>
         <a (click)="drawer.close()" *ngIf="userIsAuthenticated"  class="sidenav-item" mat-list-item  routerLink="/product-form">
-<!--          <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="work"></mat-icon>-->
           Admin Dashboard
         </a>
       </div>
@@ -37,12 +36,9 @@
           <a class="nav-item" mat-list-item routerLink="/login"  *ngIf="!userIsAuthenticated">Admin Login</a>
           <a  class="nav-item" mat-list-item routerLink="/product-form"  *ngIf="userIsAuthenticated">
             Admin Dashboard
-<!--            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="work"></mat-icon>-->
           </a>
-          <!--          </div>-->
         </div>
       </span>
     </mat-toolbar>
-    <!-- Add Content Here -->
   </mat-sidenav-content>
 </mat-sidenav-container>

@@ -13,7 +13,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatCardModule} from '@angular/material/card';
 import { FormsModule } from '@angular/forms';
 import { MatExpansionModule } from '@angular/material/expansion';
-// import {IvyCarouselModule} from 'angular-responsive-carousel';
 
 
 
@@ -39,6 +38,7 @@ import { ProductManagementComponent } from './product-management/product-managem
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {AuthGuard} from "./auth.guard";
+import {MatInputModule} from "@angular/material/input";
 
 
 
@@ -58,39 +58,39 @@ import {AuthGuard} from "./auth.guard";
     MaterialElevationDirective,
     ProductManagementComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatSidenavModule,
-    MatCardModule,
-    BrowserAnimationsModule,
-    LayoutModule,
-    MatButtonModule,
-    MatListModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    SwiperModule,
-    FlexLayoutModule,
-    // IvyCarouselModule,
-    MatExpansionModule,
-    MatPaginatorModule,
-    FormsModule,
-    RouterModule.forRoot([
-      {path: '', component: HomepageComponent},
-      {path: 'product-form', component: ProductFormComponent},
-      {path: 'seeds-view', component: SeedsViewComponent},
-      {path: 'fertilizers-view', component: FertilizersViewComponent},
-      {path: 'machinery-view', component: MachineryViewComponent},
-      {path: 'login', component: LoginComponent},
-      {path: 'signup', component: SignupComponent},
-      {path: 'product-management', component: ProductManagementComponent, canActivate: [AuthGuard]},
-      // {path: 'product-form/edit/:productId', component: ProductFormComponent, canActivate: [AuthGuard]}
-      {path: 'edit/:productId', component: ProductFormComponent, canActivate: [AuthGuard]}
-    ]),
-    MatProgressSpinnerModule,
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatSidenavModule,
+        MatCardModule,
+        BrowserAnimationsModule,
+        LayoutModule,
+        MatButtonModule,
+        MatListModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+        SwiperModule,
+        FlexLayoutModule,
+        // IvyCarouselModule,
+        MatExpansionModule,
+        MatPaginatorModule,
+        FormsModule,
+        RouterModule.forRoot([
+            {path: '', component: HomepageComponent},
+            {path: 'product-form', component: ProductFormComponent},
+            {path: 'seeds-view', component: SeedsViewComponent},
+            {path: 'fertilizers-view', component: FertilizersViewComponent},
+            {path: 'machinery-view', component: MachineryViewComponent},
+            {path: 'login', component: LoginComponent},
+            {path: 'signup', component: SignupComponent},
+            {path: 'product-management', component: ProductManagementComponent, canActivate: [AuthGuard]},
+            {path: 'edit/:productId', component: ProductFormComponent, canActivate: [AuthGuard]}
+        ]),
+        MatProgressSpinnerModule,
+        MatInputModule,
+    ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     {provide: AuthGuard}
