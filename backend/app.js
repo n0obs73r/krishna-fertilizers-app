@@ -15,7 +15,7 @@ const app = express();
 
 const storage = memoryStorage();
 
-mongoose.connect("mongodb+srv://aryand:VfuApYwUqUpTrnbx@cluster0.psmskrd.mongodb.net/?retryWrites=true&w=majority")
+mongoose.connect("mongodb+srv://<username>:<password>@cluster0.psmskrd.mongodb.net/?retryWrites=true&w=majority")
 .then(() => {
     console.log('Connected to Database!');
 })

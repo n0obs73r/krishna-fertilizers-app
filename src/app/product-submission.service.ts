@@ -37,7 +37,7 @@ export class ProductSubmissionService {
     console.log(queryParamsProduct)
     this.http
       .get<{ message: string; products: any; maxProducts: number}>(
-        "http://krishna-fertilizers.ap-northeast-1.elasticbeanstalk.com/product-management" + queryParamsProduct
+        "http://localhost:3000/product-management" + queryParamsProduct
       )
       .pipe(map((productData) => {
         return{ products: productData.products.map((product:any) => {
@@ -68,7 +68,7 @@ export class ProductSubmissionService {
 
   deleteProduct(productId: string) {
     return this.http
-      .delete("http://krishna-fertilizers.ap-northeast-1.elasticbeanstalk.com/edit/" + productId);
+      .delete("http://localhost:3000/edit/" + productId);
   }
 
   getProduct(id: string) {
@@ -84,15 +84,15 @@ export class ProductSubmissionService {
       s_price: string ,
       season: string,
       image: File
-    }>("http://krishna-fertilizers.ap-northeast-1.elasticbeanstalk.com/edit/" + id);
-    // }>("http://krishna-fertilizers.ap-northeast-1.elasticbeanstalk.com/product-form/edit/" + id);
+    }>("http://localhost:3000/edit/" + id);
+    // }>("http://localhost:3000/product-form/edit/" + id);
   }
 
 
   getSale(){
     this.http
       .get<{ message: string; products: any; }>(
-        "http://krishna-fertilizers.ap-northeast-1.elasticbeanstalk.com"
+        "http://localhost:3000"
       )
       .pipe(map((productData) => {
         return {
@@ -129,7 +129,7 @@ export class ProductSubmissionService {
     console.log(queryParamsSeed)
     this.http
       .get<{ message: string; products: any; maxProductsSeeds: number}>(
-        "http://krishna-fertilizers.ap-northeast-1.elasticbeanstalk.com/seeds-view" + queryParamsSeed
+        "http://localhost:3000/seeds-view" + queryParamsSeed
       )
       .pipe(map((productData) => {
         return{ products: productData.products.map((product:any) => {
@@ -166,7 +166,7 @@ export class ProductSubmissionService {
     console.log(queryParamsFertilizer);
     this.http
       .get<{ message: string; products: any; maxProductsFertilizers: number}>(
-        "http://krishna-fertilizers.ap-northeast-1.elasticbeanstalk.com/fertilizers-view" + queryParamsFertilizer
+        "http://localhost:3000/fertilizers-view" + queryParamsFertilizer
       )
       .pipe(map((productData) => {
         return{ products: productData.products.map((product:any) => {
@@ -203,7 +203,7 @@ export class ProductSubmissionService {
     console.log(queryParamMachines)
     this.http
       .get<{ message: string; products: any; maxProductsMachine: number}>(
-        "http://krishna-fertilizers.ap-northeast-1.elasticbeanstalk.com/machinery-view" + queryParamMachines
+        "http://localhost:3000/machinery-view" + queryParamMachines
       )
       .pipe(map((productData) => {
         return{ products: productData.products.map((product:any) => {
@@ -286,7 +286,7 @@ export class ProductSubmissionService {
       }
       console.log("Image String : " + image + " " + img_url);
     }
-    this.http.put<{ token: string }>('http://krishna-fertilizers.ap-northeast-1.elasticbeanstalk.com/edit/' + id,productData2)       ///////////////////updates but auth failed
+    this.http.put<{ token: string }>('http://localhost:3000/edit/' + id,productData2)       ///////////////////updates but auth failed
       .subscribe(response => {
         console.log(response);
         this.router.navigate(["/"]);
@@ -319,7 +319,7 @@ export class ProductSubmissionService {
       productData.append("s_price", s_price );
       productData.append("season", season);
       productData.append("image", image, img_url);
-      this.http.post<{message:string}>('http://krishna-fertilizers.ap-northeast-1.elasticbeanstalk.com/product-form', productData)
+      this.http.post<{message:string}>('http://localhost:3000/product-form', productData)
         .subscribe((responseData) =>{
           const product: Product = {
             id: "1",
@@ -341,7 +341,7 @@ export class ProductSubmissionService {
 
     createUser(email: string, password: string) {
     const authData: AuthData = {email: email, password: password}
-      this.http.post("http://krishna-fertilizers.ap-northeast-1.elasticbeanstalk.com/signup", authData)
+      this.http.post("http://localhost:3000/signup", authData)
         .subscribe(response => {
           console.log(response);
         })
@@ -349,7 +349,7 @@ export class ProductSubmissionService {
 
     loginUser(email: string, password: string) {
       const authData: AuthData = {email: email, password: password}
-      this.http.post<{token: string}>("http://krishna-fertilizers.ap-northeast-1.elasticbeanstalk.com/login", authData)
+      this.http.post<{token: string}>("http://localhost:3000/login", authData)
         .subscribe(response => {
           console.log(response);
           const token = response.token;
