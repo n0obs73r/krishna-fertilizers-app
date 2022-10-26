@@ -93,30 +93,11 @@ export class ProductSubmissionService {
 
 
   getSale(){
-
-    // // const response = axios.get('http://192.168.1.7:3000')
-    // //
-    // // console.log(response);
-    // const promise = await axios.get('http://192.168.1.7:3000')
-    //   // .then(promise => {
-    //   //   console.log("Array: " + promise.data.p_name);
-    //   // });
-    //
-    // console.log(promise.data);
-    // const dataPromise =  promise.data
-    // // dataPromise.subscribe(transformedProducts => {
-    // //   this.products = transformedProducts;
-    // //   this.productsUpdatedWithoutCount.next([...this.products]);
-    // //   console.log(this.products);
-    // // });
-
     this.http
       .get<{ message: string; products: any; }>(
         "http://192.168.1.7:3000"
       )
       .pipe(map((productData) => {
-        // console.log("Retrieved Array is:  "+ productData);
-
         return {
           products: productData.products.map((products: any) => {
             return {
@@ -132,16 +113,16 @@ export class ProductSubmissionService {
               season: products.season,
               image: File
             };
-          })
+          }),
+          maxProducts: 20
         }
       }))
       .subscribe(transformedProducts => {
         console.log(transformedProducts);
           this.products = transformedProducts.products;
-          this.productsUpdatedWithoutCount.next([...this.products]);
-          console.log(this.products);
+          this.productsUpdated.next({products:[...this.products],  productCount: transformedProducts.maxProducts});
       });
-    // console.log(this.products)
+    // console.log(this.products);
   }
 
 

@@ -9,6 +9,8 @@ import SwiperCore, { EffectCube, Pagination } from "swiper";
 import {ProductSubmissionService} from "../product-submission.service";
 import {Product} from "../products";
 import {Subscription} from "rxjs";
+import { NgZone } from "@angular/core";
+
 
 // install Swiper modules
 SwiperCore.use([EffectCube, Pagination]);
@@ -26,7 +28,10 @@ export class HomepageComponent implements OnInit {
   private productsSub?: Subscription;
   products: Product[] = [];
   isLoading = false;
-  constructor( public productsService: ProductSubmissionService) { }
+  constructor( public productsService: ProductSubmissionService) {
+  }
+
+
 
   ngOnInit(): void {
     this.isLoading = true;
@@ -41,7 +46,6 @@ export class HomepageComponent implements OnInit {
 
 
   }
-  seeds = [...this.products];
 
 
   swiperConfig: any = {
