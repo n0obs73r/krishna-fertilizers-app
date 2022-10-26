@@ -1,7 +1,7 @@
 
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
-import { Product, products } from '../products';
+import { Product } from '../products';
 import { mimeType } from './mime-type.validator';
 import { ProductSubmissionService } from '../product-submission.service';
 import {ActivatedRoute, ParamMap} from "@angular/router";

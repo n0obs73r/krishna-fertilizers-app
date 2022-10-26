@@ -5,6 +5,8 @@ import {HttpClient} from '@angular/common/http';
 import {Subject} from "rxjs";
 import {map} from 'rxjs/operators';
 import {Router} from "@angular/router";
+import axios from "axios";
+import {response} from "express";
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +16,7 @@ export class ProductSubmissionService {
   private authStatusListener = new Subject<boolean>();
   private products: Product[] = [];
   private productsUpdated = new Subject<{ products: Product[], productCount: number }>();
+  private productsUpdatedWithoutCount = new Subject<Product[]>();
   private token: string = "";
 
   constructor(private http: HttpClient, private router: Router) { }
@@ -89,6 +92,59 @@ export class ProductSubmissionService {
   }
 
 
+  getSale(){
+
+    // // const response = axios.get('http://192.168.1.7:3000')
+    // //
+    // // console.log(response);
+    // const promise = await axios.get('http://192.168.1.7:3000')
+    //   // .then(promise => {
+    //   //   console.log("Array: " + promise.data.p_name);
+    //   // });
+    //
+    // console.log(promise.data);
+    // const dataPromise =  promise.data
+    // // dataPromise.subscribe(transformedProducts => {
+    // //   this.products = transformedProducts;
+    // //   this.productsUpdatedWithoutCount.next([...this.products]);
+    // //   console.log(this.products);
+    // // });
+
+    this.http
+      .get<{ message: string; products: any; }>(
+        "http://192.168.1.7:3000"
+      )
+      .pipe(map((productData) => {
+        // console.log("Retrieved Array is:  "+ productData);
+
+        return {
+          products: productData.products.map((products: any) => {
+            return {
+              id: products._id,
+              p_name: products.p_name,
+              p_brand: products.p_brand,
+              type: products.type,
+              price: products.price,
+              description: products.description,
+              img_url: products.img_url,
+              sale: products.sale,
+              s_price: products.s_price,
+              season: products.season,
+              image: File
+            };
+          })
+        }
+      }))
+      .subscribe(transformedProducts => {
+        console.log(transformedProducts);
+          this.products = transformedProducts.products;
+          this.productsUpdatedWithoutCount.next([...this.products]);
+          console.log(this.products);
+      });
+    // console.log(this.products)
+  }
+
+
 
   getSeeds(productsPerPage: number, currentPage: number){
     const queryParamsSeed =`?pagesize=${productsPerPage}&page=${currentPage}`;
@@ -157,6 +213,7 @@ export class ProductSubmissionService {
         this.products = transformedPostData.products;
         this.productsUpdated.next({ products:[...this.products] ,
           productCount: transformedPostData.maxProductsFertilizers});
+        console.log(this.products);
       });
     console.log(this.products)
   }
@@ -192,12 +249,17 @@ export class ProductSubmissionService {
       .subscribe(transformedPostData => {
         this.products = transformedPostData.products;
         this.productsUpdated.next({ products:[...this.products] ,
-          productCount: transformedPostData.maxProductsMachine});      });
+          productCount: transformedPostData.maxProductsMachine});
+      });
     console.log(this.products)
   }
 
   getProductUpdateListener() {
     return this.productsUpdated.asObservable();
+  }
+
+  getProductUpdateListenernoCount(){
+    return this.productsUpdatedWithoutCount.asObservable();
   }
 
   public updateProduct(

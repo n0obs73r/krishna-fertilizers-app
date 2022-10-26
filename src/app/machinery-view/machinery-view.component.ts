@@ -28,6 +28,7 @@ export class MachineryViewComponent implements OnInit {
         this.isLoading = false;
         this.products = productData.products;
         this.totalProducts = productData.productCount;
+        console.log(productData.products);
       });
   }
 

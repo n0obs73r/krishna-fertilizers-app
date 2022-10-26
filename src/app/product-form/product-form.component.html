@@ -1,6 +1,13 @@
 <div style="display: flex; justify-content: center;text-align: center; margin: 30px auto">
-  <a mat-button color="primary" routerLink="/product-management" >EDIT</a>
+
 <mat-card style=" justify-content: center; text-align: center; max-width: 100%; margin-left: 10px">
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <mat-card-header style="justify-content: center"><a style=" background-color: blue;
+  color: white;
+  padding: 1em 1.5em;
+  text-decoration: none;
+  border-radius: 15px;
+  text-transform: uppercase;" mat-button color="primary" routerLink="/product-management" >Tap to View/Edit Products</a></mat-card-header>
     <form enctype="multipart/form-data" [formGroup]="form" (submit)="onSubmit()" >
         <div class="input-fields">
             <label >Name: </label>
@@ -63,12 +70,17 @@
               <div class="input-fields">
             <label >Image Upload: </label>
               </div>
-      <div class="input-fields">
+      <div class="input-fields" >
             <input formControlName="img_url" required type="file" (change)="onImagePicked($event)" #imageInput accept="image/*">
 
         </div>
         <div class="input-fields">
-        <button  type="Submit">Save Product</button>
+        <button style="justify-content: center  !important;background-color: red;
+  color: white;
+  padding: 1em 1.5em;
+  text-decoration: none;
+  border-radius: 15px;
+  text-transform: uppercase;"  type="Submit">Save Product</button>
     </div>
     </form>
 </mat-card>

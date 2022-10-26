@@ -29,6 +29,7 @@ export class FertilizersViewComponent implements OnInit {
         this.isLoading = false;
         this.products = productData.products;
         this.totalProducts = productData.productCount;
+        console.log("fertilizers: "+ productData.products);
       });
   }
   onChangedPage(pageData: PageEvent) {

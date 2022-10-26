@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 // import { seeds } from '../Products/seeds'
 import { Subscription } from 'rxjs';
 import { ProductSubmissionService } from '../product-submission.service';
-import {Product, products} from '../products';
+import {Product} from '../products';
 import {PageEvent} from "@angular/material/paginator";
 @Component({
   selector: 'app-seeds-view',

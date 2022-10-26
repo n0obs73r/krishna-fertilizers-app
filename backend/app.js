@@ -114,6 +114,15 @@ app.put("/edit/:id", checkAuth, multer({ storage: storage }).single("image"), as
   }
 );
 
+app.delete("/edit/:id", checkAuth, (req, res, next) => {
+  Product.deleteOne({ _id: req.params.id}).then(
+    result => {
+      console.log(result);
+      res.status(200).json({message: "Product Deleted"});
+    }
+  );
+});
+
 app.get('/product-management', checkAuth, (req,res,next) =>{
   const pageSizeProduct = +req.query.pagesize;
   console.log(req.query);
@@ -164,6 +173,42 @@ app.get('/seeds-view',(req,res,next) =>{
     });
   // console.log(countSeed);
 });
+
+
+app.get('',(req,res,next) =>{
+
+  const productQueryProduct = Product.find({sale : "true"});
+  let fetchedProductsSale;
+  productQueryProduct.then(documents => {
+    fetchedProductsSale = documents;
+  })
+    .then(r => {
+      res.status(200).json({
+        message: "Products Fetched Successfully!",
+        products: fetchedProductsSale,
+        response: r
+      });
+    });
+});
+
+//   Product.find({sale: "true"}).then(documents =>{
+//     req.status(200).json({
+//       message: "Products fetched successfully!",
+//       products: documents
+//     })
+//   })
+//   // Product.find({sale: "true"}).then(product => {
+//   //   if (product) {
+//   //     res.status(200).json(product);
+//   //     console.log(product);
+//   //   } else {
+//   //     res.status(404).json({ message: "Products not found!" });
+//   //   }
+//   // });
+//   // console.log(products);
+// });
+
+
 
 app.get('/fertilizers-view',(req,res,next) =>{
   const pageSizeFertilizer = +req.query.pagesize;

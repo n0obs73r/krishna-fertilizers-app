@@ -19,21 +19,21 @@
             [centeredSlides]="true"
             [scrollbar]="{ draggable: true }"
     >
-      <ng-template *ngFor="let seed of seeds | slice:0:5" swiperSlide >
+      <ng-template *ngFor="let product of products" swiperSlide >
         <div class="content" style="padding: 10px 0;" >
           <mat-card class="mat-elevation-z4 card" style="margin: 0 auto; width: 40vw;">
             <mat-card-header style="margin: 0 auto; text-align: center; display: block;">
-              <mat-card-title style="margin: 0 auto; text-align: center; font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;font-size: 1.5em; margin: 10px auto;">{{ seed.name }}</mat-card-title>
+              <mat-card-title style="margin: 0 auto; text-align: center; font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;font-size: 1.5em; margin: 10px auto;">{{ product.p_name }}</mat-card-title>
             </mat-card-header>
-            <img class="img-dim" style="margin: 0px; width: 100%; height: 100%; max-height: 400px;" mat-card-image  [src]="''+ seed.img_url">
+            <img class="img-dim" style="margin: 0px; width: 100%; height: 100%; max-height: 400px;" mat-card-image  [src]="''+ product.img_url">
             <mat-card-content>
               <p style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif ; margin-top: 20px">
-                {{ seed.description }}
+                {{ product.description }}
               </p>
             </mat-card-content>
             <mat-card-actions>
-              <button mat-button>{{ seed.price | currency:'INR' }}</button>
-              <button mat-button>{{ seed.type }}</button>
+              <button mat-button>{{ product.price | currency:'INR' }}</button>
+              <button mat-button>{{ product.type }}</button>
             </mat-card-actions>
           </mat-card>
         </div>
