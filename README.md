@@ -45,5 +45,9 @@ To deploy the Angular Frontend
 
 Contributions are always welcome!
 
+##Deployed Website
+
+[Krishna Fertilizers](http://krishna-fertilizers-mean.s3-website-ap-northeast-1.amazonaws.com/)
+
 
 
